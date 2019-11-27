@@ -21,18 +21,6 @@ export default part => {
 
   // Center back (cb) vertical axis
   points.cbNeck = new Point(0, options.backNeckCutout * measurements.neckCircumference)
-  points.cbShoulder = new Point(
-    0,
-    (measurements.shoulderSlope -
-      measurements.shoulderToShoulder * options.shoulderSlopeReduction) /
-      2
-  )
-  points.cbArmhole = new Point(
-    0,
-    points.cbShoulder.y +
-      (measurements.shoulderToShoulder * options.shoulderSlopeReduction) / 2 +
-      measurements.bicepsCircumference * (1 + options.bicepsEase) * options.armholeDepthFactor
-  )
   points.cbWaist = new Point(0, points.cbNeck.y + measurements.centerBackNeckToWaist)
   points.cbHips = new Point(0, points.cbWaist.y + measurements.naturalWaistToHip)
   points.cbHem = new Point(
@@ -40,6 +28,26 @@ export default part => {
     points.cbWaist.y +
       measurements.naturalWaistToHip +
       (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip) * options.lengthBonus
+  )
+
+  // Shoulder using the new shoulder slope measurement
+  points.shoulder = utils.circlesIntersect(
+    points.cbNeck,
+    measurements.shoulderToShoulder / 2,
+    points.cbHips,
+    measurements.shoulderSlope,
+    'x'
+  )[1]
+  points.shoulder = points.shoulder.shift(90, points.shoulder.y * options.shoulderSlopeReduction)
+  points.cbShoulder = new Point(0, points.shoulder.y)
+  points.cbArmhole = new Point(
+    0,
+    points.cbShoulder.y +
+      measurements.bicepsCircumference * (1 + options.bicepsEase) * options.armholeDepthFactor
+  )
+  points.neck = new Point(
+    (measurements.neckCircumference * (1 + options.collarEase)) / options.collarFactor,
+    0
   )
 
   // Side back (cb) vertical axis
@@ -50,16 +58,6 @@ export default part => {
   points.waist = new Point(points.armhole.x, points.cbWaist.y)
   points.hips = new Point(points.armhole.x, points.cbHips.y)
   points.hem = new Point(points.armhole.x, points.cbHem.y)
-
-  // Shoulder line
-  points.neck = new Point(
-    (measurements.neckCircumference * (1 + options.collarEase)) / options.collarFactor,
-    0
-  )
-  points.shoulder = new Point(
-    measurements.shoulderToShoulder / 2 + store.get('shoulderEase'),
-    points.cbShoulder.y
-  )
 
   // Armhhole
   points.armholePitch = new Point(

@@ -1,89 +1,88 @@
-import { version } from "../package.json";
+import { version } from '../package.json'
 
 export default {
-  name: "brian",
+  name: 'brian',
   version: version,
-  design: "Joost De Cock",
-  code: "Joost De Cock",
-  department: "menswear",
-  type: "block",
+  design: 'Joost De Cock',
+  code: 'Joost De Cock',
+  department: 'menswear',
+  type: 'block',
   difficulty: 3,
-  tags: ["top"],
+  tags: ['top'],
   optionGroups: {
     fit: [
-      "chestEase",
-      "collarEase",
-      "bicepsEase",
-      "cuffEase",
-      "shoulderEase",
-      "lengthBonus",
-      "sleeveLengthBonus"
+      'chestEase',
+      'collarEase',
+      'bicepsEase',
+      'cuffEase',
+      'shoulderEase',
+      'lengthBonus',
+      'sleeveLengthBonus'
     ],
     advanced: [
-      "acrossBackFactor",
-      "armholeDepthFactor",
-      "backNeckCutout",
-      "frontArmholeDeeper",
-      "shoulderSlopeReduction",
-      "sleeveWidthGuarantee",
+      'acrossBackFactor',
+      'armholeDepthFactor',
+      'frontArmholeDeeper',
+      'shoulderSlopeReduction',
+      'sleeveWidthGuarantee',
       {
         sleevecap: [
-          "sleevecapEase",
-          "sleevecapTopFactorX",
-          "sleevecapTopFactorY",
-          "sleevecapBackFactorX",
-          "sleevecapBackFactorY",
-          "sleevecapFrontFactorX",
-          "sleevecapFrontFactorY",
-          "sleevecapQ1Offset",
-          "sleevecapQ2Offset",
-          "sleevecapQ3Offset",
-          "sleevecapQ4Offset",
-          "sleevecapQ1Spread1",
-          "sleevecapQ1Spread2",
-          "sleevecapQ2Spread1",
-          "sleevecapQ2Spread2",
-          "sleevecapQ3Spread1",
-          "sleevecapQ3Spread2",
-          "sleevecapQ4Spread1",
-          "sleevecapQ4Spread2"
+          'sleevecapEase',
+          'sleevecapTopFactorX',
+          'sleevecapTopFactorY',
+          'sleevecapBackFactorX',
+          'sleevecapBackFactorY',
+          'sleevecapFrontFactorX',
+          'sleevecapFrontFactorY',
+          'sleevecapQ1Offset',
+          'sleevecapQ2Offset',
+          'sleevecapQ3Offset',
+          'sleevecapQ4Offset',
+          'sleevecapQ1Spread1',
+          'sleevecapQ1Spread2',
+          'sleevecapQ2Spread1',
+          'sleevecapQ2Spread2',
+          'sleevecapQ3Spread1',
+          'sleevecapQ3Spread2',
+          'sleevecapQ4Spread1',
+          'sleevecapQ4Spread2'
         ]
       }
     ]
   },
   measurements: [
-    "bicepsCircumference",
-    "centerBackNeckToWaist",
-    "chestCircumference",
-    "naturalWaistToHip",
-    "neckCircumference",
-    "shoulderSlope",
-    "shoulderToShoulder",
-    "shoulderToWrist",
-    "wristCircumference"
+    'bicepsCircumference',
+    'centerBackNeckToWaist',
+    'chestCircumference',
+    'naturalWaistToHip',
+    'neckCircumference',
+    'shoulderSlope',
+    'shoulderToShoulder',
+    'shoulderToWrist',
+    'wristCircumference'
   ],
   dependencies: {
-    back: "base",
-    front: "back",
-    sleevecap: "front",
-    sleeve: "sleevecap"
+    back: 'base',
+    front: 'back',
+    sleevecap: 'front',
+    sleeve: 'sleevecap'
   },
   inject: {
-    back: "base",
-    front: "back",
-    sleeve: "sleevecap"
+    back: 'base',
+    front: 'back',
+    sleeve: 'sleevecap'
   },
-  hide: ["base", "sleevecap"],
+  hide: ['base', 'sleevecap'],
   options: {
     // Constants
     brianFitSleeve: true,
     brianFitCollar: true,
     collarFactor: 4.8,
+    backNeckCutout: 0.05,
 
     // Percentages
     acrossBackFactor: { pct: 97, min: 93, max: 100 },
     armholeDepthFactor: { pct: 60, min: 50, max: 70 },
-    backNeckCutout: { pct: 5, min: 2, max: 8 },
     bicepsEase: { pct: 15, min: 0, max: 50 },
     chestEase: { pct: 8, min: -4, max: 20 },
     collarEase: { pct: 3.5, min: 0, max: 10 },
@@ -91,7 +90,7 @@ export default {
     frontArmholeDeeper: { pct: 0.5, min: 0, max: 1.5 },
     lengthBonus: { pct: 0, min: -4, max: 60 },
     shoulderEase: { pct: 0, min: -2, max: 6 },
-    shoulderSlopeReduction: { pct: 0, min: 0, max: 8 },
+    shoulderSlopeReduction: { pct: 0, min: 0, max: 100 },
     sleevecapEase: { pct: 1, min: 0, max: 10 },
     sleevecapTopFactorX: { pct: 50, min: 25, max: 75 },
     sleevecapTopFactorY: { pct: 100, min: 35, max: 165 },
@@ -114,4 +113,4 @@ export default {
     sleeveWidthGuarantee: { pct: 90, min: 25, max: 100 },
     sleeveLengthBonus: { pct: 0, min: -40, max: 10 }
   }
-};
+}
