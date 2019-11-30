@@ -2,6 +2,15 @@ Unreleased:
   date:
   Added:
   Changed:
+    - models:
+      - BREAKING: Change of measurements
+        We are implementing a couple of changes to the measurements we use to draft patterns. Specifically:
+          - The `centerBackNeckToWaist` measurement is no longer, instead we use `centerBackNeckToHips`
+          - We have two new measurements: `hpsToHipsBack` and `hpsToWaistBack`
+          - The `naturalWaistToHips` measurement is no longer used, as it has become redundant
+          - We've renamed `highPointShoulderToBust` to `hpsToBust`
+        These changes are made to make measurements more consistent, easier to measure, and in anticipation
+        of a new bodice block for people with breasts.
   Deprecated:
   Removed:
   Fixed:
