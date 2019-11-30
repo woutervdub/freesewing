@@ -20,19 +20,14 @@ export default part => {
   store.set('shoulderEase', (measurements.shoulderToShoulder * options.shoulderEase) / 2)
 
   // Center back (cb) vertical axis
-  points.cbNeck = new Point(0, options.backNeckCutout * measurements.neckCircumference)
-  points.cbWaist = new Point(0, points.cbNeck.y + measurements.centerBackNeckToWaist)
-  points.cbHips = new Point(0, points.cbWaist.y + measurements.naturalWaistToHip)
-  points.cbHem = new Point(
-    0,
-    points.cbWaist.y +
-      measurements.naturalWaistToHip +
-      (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip) * options.lengthBonus
-  )
+  points.cbHips = new Point(0, measurements.hpsToHipsBack)
+  points.cbWaist = new Point(0, measurements.hpsToWaistBack)
+  points.cbNeck = new Point(0, measurements.hpsToHipsBack - measurements.centerBackNeckToHips)
+  points.cbHem = points.cbHips.shift(-90, measurements.hpsToHipsBack * options.lengthBonus)
 
   // Shoulder using the new shoulder slope measurement
   points.shoulder = utils.circlesIntersect(
-    points.cbNeck,
+    new Point(0, 0),
     measurements.shoulderToShoulder / 2,
     points.cbHips,
     measurements.shoulderSlope,
@@ -45,7 +40,7 @@ export default part => {
     points.cbShoulder.y +
       measurements.bicepsCircumference * (1 + options.bicepsEase) * options.armholeDepthFactor
   )
-  points.neck = new Point(
+  points.hps = new Point(
     (measurements.neckCircumference * (1 + options.collarEase)) / options.collarFactor,
     0
   )
@@ -92,15 +87,15 @@ export default part => {
     points.shoulder.dy(points.armholePitch) / 2
   )
   points.shoulderCp1 = points.shoulder
-    .shiftTowards(points.neck, points.shoulder.dy(points.armholePitch) / 5)
+    .shiftTowards(points.hps, points.shoulder.dy(points.armholePitch) / 5)
     .rotate(90, points.shoulder)
 
   // Neck opening (back)
-  points._tmp4 = points.neck.shiftTowards(points.shoulder, 10).rotate(-90, points.neck)
-  points.neckCp2 = utils.beamIntersectsY(points.neck, points._tmp4, points.cbNeck.y)
+  points._tmp4 = points.hps.shiftTowards(points.shoulder, 10).rotate(-90, points.hps)
+  points.hpsCp2 = utils.beamIntersectsY(points.hps, points._tmp4, points.cbNeck.y)
 
   // Fit collar
-  points.cfNeck = points.neck.rotate(-90, new Point(0, 0))
+  points.cfNeck = points.hps.rotate(-90, new Point(0, 0))
   let target = measurements.neckCircumference * (1 + options.collarEase)
   let delta = 0
   let run = 0
@@ -108,17 +103,17 @@ export default part => {
     run++
     points.cfNeck = points.cfNeck.shift(90, delta / 3)
     points.frontNeckCpEdge = utils.beamsIntersect(
-      points.neck,
-      points.neckCp2,
+      points.hps,
+      points.hpsCp2,
       points.cfNeck,
       new Point(20, points.cfNeck.y)
     )
     points.cfNeckCp1 = points.cfNeck.shiftFractionTowards(points.frontNeckCpEdge, 0.55)
-    points.neckCp2Front = points.neck.shiftFractionTowards(points.frontNeckCpEdge, 0.65)
+    points.hpsCp2Front = points.hps.shiftFractionTowards(points.frontNeckCpEdge, 0.65)
     paths.neckOpening = new Path()
       .move(points.cfNeck)
-      .curve(points.cfNeckCp1, points.neckCp2Front, points.neck)
-      .curve(points.neckCp2, points.cbNeck, points.cbNeck)
+      .curve(points.cfNeckCp1, points.hpsCp2Front, points.hps)
+      .curve(points.hpsCp2, points.cbNeck, points.cbNeck)
       .attr('class', 'dashed stroke-xl various')
     delta = paths.neckOpening.length() * 2 - target
   } while (Math.abs(delta) > 1 && options.brianFitCollar && run < 10)

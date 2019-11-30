@@ -29,7 +29,7 @@ export default part => {
     delete points[`cb${key}`]
   }
   // Front neckline points
-  points.neckCp2 = new Point(points.neckCp2Front.x, points.neckCp2Front.y)
+  points.hpsCp2 = new Point(points.hpsCp2Front.x, points.hpsCp2Front.y)
 
   // Seamline
   paths.saBase = shared.saBase('front', points, Path)
@@ -77,13 +77,13 @@ export default part => {
     })
     macro('hd', {
       from: points.cfNeck,
-      to: points.neck,
-      y: points.neck.y - sa - 15
+      to: points.hps,
+      y: points.hps.y - sa - 15
     })
     macro('hd', {
       from: points.cfNeck,
       to: points.shoulder,
-      y: points.neck.y - sa - 30
+      y: points.hps.y - sa - 30
     })
   }
 

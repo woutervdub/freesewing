@@ -61,13 +61,13 @@ export default part => {
     })
     macro('hd', {
       from: points.cbNeck,
-      to: points.neck,
-      y: points.neck.y - sa - 15
+      to: points.hps,
+      y: points.hps.y - sa - 15
     })
     macro('hd', {
       from: points.cbNeck,
       to: points.shoulder,
-      y: points.neck.y - sa - 30
+      y: points.hps.y - sa - 30
     })
   }
 
