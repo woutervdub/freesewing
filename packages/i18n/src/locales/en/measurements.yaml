@@ -2,11 +2,13 @@ acrossBack: Across back (deprecated)
 ankleCircumference: Ankle circumference
 bicepsCircumference: Biceps circumference
 bustSpan: Bust span
-centerBackNeckToWaist: Centerback neck to waist
+centerBackNeckToHips: Centerback neck to hips
 chestCircumference: Chest circumference
 headCircumference: Head circumference
 highBust: High bust
-highPointShoulderToBust: High point shoulder to bust
+hpsToBust: HPS to bust
+hpsToHipsBack: HPS to hips (back)
+hpsToWaistBack: HPS to waist (back)
 hipsCircumference: Hips circumference
 hipsToUpperLeg: Hips to upper leg
 inseam: Inseam

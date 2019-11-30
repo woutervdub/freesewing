@@ -7,9 +7,9 @@ export default {
     slope: 0.45,
     base: 325
   },
-  centerBackNeckToWaist: {
-    slope: 0.15,
-    base: 453
+  centerBackNeckToHips: {
+    slope: 0.3,
+    base: 633
   },
   chestCircumference: {
     slope: 2.0,
@@ -26,6 +26,14 @@ export default {
   hipsToUpperLeg: {
     slope: 0.1,
     base: 220
+  },
+  hpsToHipsBack: {
+    slope: 0.3,
+    base: 654
+  },
+  hpsToWaistBack: {
+    slope: 0.15,
+    base: 474
   },
   inseam: {
     slope: 0.2,
