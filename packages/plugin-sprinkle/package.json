@@ -25,7 +25,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && rollup -c",
-    "test": "echo \"plugin-sprinkle: No tests configured. Perhaps you'd like to do this?\" && exit 0",
+    "test": "BABEL_ENV=production ../../node_modules/.bin/mocha tests/*.test.js",
     "pubtest": "npm publish --registry http://localhost:6662",
     "pubforce": "npm publish",
     "symlink": "mkdir -p ./node_modules/@freesewing && cd ./node_modules/@freesewing && ln -s -f ../../../* . && cd -",

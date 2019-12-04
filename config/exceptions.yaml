@@ -12,6 +12,7 @@ customRollup:
   - remark-jargon
   - utils
   - prettier-config
+  - pattern-tests
 packageJson:
   components:
     # react-scripts doesn't handle .mjs files correctly

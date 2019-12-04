@@ -1,14 +1,14 @@
 _:
   clean: "rimraf dist"
   build: "npm run clean && rollup -c"
-  test: "echo \"{{name}}: No tests configured. Perhaps you'd like to do this?\" && exit 0"
+  test: "BABEL_ENV=production ../../node_modules/.bin/mocha tests/*.test.js"
   pubtest: "npm publish --registry http://localhost:6662"
   pubforce: "npm publish"
   symlink: "mkdir -p ./node_modules/@freesewing && cd ./node_modules/@freesewing && ln -s -f ../../../* . && cd -"
   start: "rollup -c -w"
 _types:
   pattern:
-    netlify: "echo \"Not configured yet\""
+    testpatterns: "BABEL_ENV=production npx mocha tests/*.test.js"
 create-freesewing-pattern:
   clean: "!"
   nodebuild: "!"
@@ -18,7 +18,6 @@ css-theme:
   build: "npx node-sass --output-style compressed src/theme.scss dist/theme.css"
   watch: "npx node-sass --watch --output-style compressed src/theme.scss dist/theme.css"
 components:
-  test: "echo \"{{name}}: No tests configured. Perhaps you'd like to do this?\" && exit 0"
   storybook: "start-storybook -p 6663"
   # react-scripts doesn't handle .mjs files correctly
   modulebuild: '!'
