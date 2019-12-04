@@ -128,6 +128,10 @@ mui-theme:
     "@material-ui/core": "^4.0.1"
     "react": "^16.8"
     "react-dom": "^16.8"
+pattern-tests:
+  peer:
+    "chai": "^4.1.2"
+    "@freesewing/models": "^{{version}}"
 plugin-bundle:
   _:
     "@freesewing/plugin-cutonfold": "^{{version}}"
