@@ -105,9 +105,8 @@ const draftTests = (pattern, pkg, report = true) => {
     it(`Should save results`, () => {
       content += '</div>'
       fs.mkdirSync('./report', { recursive: true })
-      fs.copyFileSync('./src/templates/style.css', './reportjltests/results/style.css')
       fs.writeFileSync('./report/style.css', templates.css)
-      fs.writeFileSync('./report/index.html', templates.startPage + content + templates.endPage)
+      fs.writeFileSync('./report/index.html', templates.pageStart + content + templates.pageEnd)
     })
   }
 }
