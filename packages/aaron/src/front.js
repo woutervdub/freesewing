@@ -31,32 +31,29 @@ export default function(part) {
   }
 
   // Neckline
-  points.cfNeck = points.cfNeck.shift(
-    -90,
-    options.necklineDrop * (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip)
-  )
+  points.cfNeck = points.cfNeck.shift(-90, options.necklineDrop * measurements.centerBackNeckToHips)
 
   // Strap
-  points.strapCenter = points.neck.shiftFractionTowards(
+  points.strapCenter = points.hps.shiftFractionTowards(
     points.shoulder,
     options.shoulderStrapPlacement
   )
   points.strapLeft = points.strapCenter.shiftTowards(
-    points.neck,
-    points.neck.dist(points.shoulder) * options.shoulderStrapWidth
+    points.hps,
+    points.hps.dist(points.shoulder) * options.shoulderStrapWidth
   )
   points.strapRight = points.strapLeft.rotate(180, points.strapCenter)
-  points.necklineCorner = utils.beamsIntersect(
+  points.hpslineCorner = utils.beamsIntersect(
     points.strapLeft,
     points.strapRight.rotate(-90, points.strapLeft),
     points.cfNeck.shift(0, points.armholePitch.x / 4),
     points.cfNeck
   )
   points.strapLeftCp2 = points.strapLeft.shiftFractionTowards(
-    points.necklineCorner,
+    points.hpslineCorner,
     options.necklineBend
   )
-  points.cfNeckCp1 = points.cfNeck.shiftFractionTowards(points.necklineCorner, options.necklineBend)
+  points.cfNeckCp1 = points.cfNeck.shiftFractionTowards(points.hpslineCorner, options.necklineBend)
 
   // Hips
   points.hips.x =

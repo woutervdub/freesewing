@@ -7,12 +7,12 @@ export function dimensions(macro, points, sa) {
   macro('hd', {
     from: points.cfNeck,
     to: points.strapLeft,
-    y: points.neck.y - sa - 15
+    y: points.hps.y - sa - 15
   })
   macro('hd', {
     from: points.cfNeck,
     to: points.strapRight,
-    y: points.neck.y - sa - 30
+    y: points.hps.y - sa - 30
   })
   macro('vd', {
     from: points.hem,
@@ -32,6 +32,6 @@ export function dimensions(macro, points, sa) {
   macro('hd', {
     from: points.cfNeck,
     to: points.aaronArmhole,
-    y: points.neck.y - sa - 45
+    y: points.hps.y - sa - 45
   })
 }
