@@ -65,7 +65,10 @@ const configTests = (pattern, pkg) => {
     let allMeasurements = []
     if (pattern.config.department === 'menswear') allMeasurements = measurements.menswear
     else allMeasurements = measurements.womenswear
-    for (let m of pattern.config.measurements) expect(allMeasurements.indexOf(m)).to.not.equal(-1)
+    for (let m of pattern.config.measurements) {
+      if (allMeasurements.indexOf(m) === -1) console.log('Not a valid measurement:', m)
+      expect(allMeasurements.indexOf(m)).to.not.equal(-1)
+    }
   })
 
   it('All options should be valid', () => {
