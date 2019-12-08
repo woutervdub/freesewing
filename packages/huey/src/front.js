@@ -50,8 +50,8 @@ export default function(part) {
   store.set(
     'frontNeckSeamLength',
     new Path()
-      .move(points.neck)
-      .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+      .move(points.hps)
+      .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
       .length()
   )
 
@@ -62,8 +62,8 @@ export default function(part) {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2, points.cfNeckCp1, points.cfNeck)
     .attr('class', 'note stroke-xxl')
   paths.hemBase = new Path()
     .move(points.cfHem)

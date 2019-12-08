@@ -19,8 +19,7 @@ export default function(part) {
 
   // Shorten body to take ribbing into account
   if (options.ribbing) {
-    let rh =
-      options.ribbingHeight * (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip)
+    let rh = options.ribbingHeight * measurements.hpsToHipsBack
     for (let p of ['hem', 'cbHem']) points[p] = points[p].shift(90, rh)
     store.set('ribbingHeight', rh)
   }
@@ -34,8 +33,8 @@ export default function(part) {
   store.set(
     'backNeckSeamLength',
     new Path()
-      .move(points.neck)
-      .curve_(points.neckCp2, points.cbNeck)
+      .move(points.hps)
+      .curve_(points.hpsCp2, points.cbNeck)
       .length()
   )
 
@@ -46,8 +45,8 @@ export default function(part) {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+    .curve_(points.hpsCp2, points.cbNeck)
     .attr('class', 'note stroke-xxl')
   paths.hemBase = new Path()
     .move(points.cbHem)

@@ -20,21 +20,21 @@ export const sharedDimensions = function(part, s) {
   })
   macro('hd', {
     from: points.cNeck,
-    to: points.neck,
-    y: points.neck.y - sa - 15
+    to: points.hps,
+    y: points.hps.y - sa - 15
   })
   macro('hd', {
     from: points.cNeck,
     to: points.shoulder,
-    y: points.neck.y - sa - 30
+    y: points.hps.y - sa - 30
   })
   macro('hd', {
     from: points.cNeck,
     to: points.armhole,
-    y: points.neck.y - sa - 45
+    y: points.hps.y - sa - 45
   })
   macro('ld', {
-    from: points.neck,
+    from: points.hps,
     to: points.shoulder,
     d: -15
   })
@@ -60,12 +60,12 @@ export const sharedDimensions = function(part, s) {
   })
   macro('vd', {
     from: points.armhole,
-    to: points.neck,
+    to: points.hps,
     x: points.armhole.x + sa + 45
   })
   macro('vd', {
     from: points.cNeck,
-    to: points.neck,
+    to: points.hps,
     x: points.cNeck.x - 15
   })
   macro('vd', {
@@ -75,7 +75,7 @@ export const sharedDimensions = function(part, s) {
   })
   macro('vd', {
     from: points.cHem,
-    to: points.neck,
+    to: points.hps,
     x: points.cNeck.x - 30
   })
 }
@@ -96,10 +96,7 @@ export const draftRibbing = function(part, length) {
     units
   } = part.shorthand()
   if (typeof store.get('ribbingHeight') === 'undefined') {
-    store.set(
-      'ribbingHeight',
-      (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip) * options.ribbingHeight
-    )
+    store.set('ribbingHeight', measurements.hpsToHipsBack * options.ribbingHeight)
   }
   let height = store.get('ribbingHeight')
   let gap = 25
