@@ -28,7 +28,7 @@ export default function(part) {
   points.ribbing = points.hem.shift(90, store.get('ribbing'))
 
   // Raglan tip
-  let neckOpening = new Path().move(points.cbNeck).curve(points.cbNeck, points.neckCp2, points.neck)
+  let neckOpening = new Path().move(points.cbNeck).curve(points.cbNeck, points.hpsCp2, points.hps)
   points.raglanTipBack = neckOpening.shiftFractionAlong(0.7)
   let neckOpeningParts = neckOpening.split(points.raglanTipBack)
   // Paths
@@ -47,7 +47,7 @@ export default function(part) {
 
   // Store neck opening path
   store.set('neckOpeningPartBack', neckOpeningParts[1])
-  store.set('neckOpeningAnchorBack', points.neck)
+  store.set('neckOpeningAnchorBack', points.hps)
   store.set('neckOpeningLenBack', neckOpening.length())
   store.set('neckCutoutBack', points.cbNeck.y)
 

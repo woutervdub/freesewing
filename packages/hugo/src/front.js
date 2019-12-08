@@ -23,14 +23,8 @@ export default function(part) {
   } = part.shorthand()
 
   // Absolute values for percentages
-  store.set(
-    'lengthBonus',
-    options.lengthBonus * (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip)
-  )
-  store.set(
-    'ribbing',
-    (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip) * options.ribbingHeight
-  )
+  store.set('lengthBonus', options.lengthBonus * measurements.hpsToHipsBack)
+  store.set('ribbing', measurements.hpsToHipsBack * options.ribbingHeight)
 
   // Hem is more descripting than hips in this case
   //points.cfHem = points.cfHips;
@@ -41,7 +35,7 @@ export default function(part) {
   points.ribbing = points.hem.shift(90, store.get('ribbing'))
 
   // Raglan tip
-  let neckOpening = new Path().move(points.cfNeck).curve(points.cfNeck, points.neckCp2, points.neck)
+  let neckOpening = new Path().move(points.cfNeck).curve(points.cfNeck, points.hpsCp2, points.hps)
   points.raglanTipFront = neckOpening.shiftFractionAlong(0.8)
   let neckOpeningParts = neckOpening.split(points.raglanTipFront)
 
@@ -49,7 +43,7 @@ export default function(part) {
   points.pocketHem = points.cfRibbing.shiftFractionTowards(points.ribbing, 0.6)
   points.pocketCf = points.cfHem.shift(
     90,
-    measurements.centerBackNeckToWaist * 0.33 + store.get('ribbing')
+    measurements.hpsToWaistBack * 0.33 + store.get('ribbing')
   )
   points.pocketTop = new Point(points.pocketHem.x, points.pocketCf.y)
   points.pocketTip = points.pocketHem
@@ -84,10 +78,10 @@ export default function(part) {
     .attr('class', 'fabric help')
 
   // Store shoulder seam length, neck opening path, shoulder slope and raglan length
-  store.set('shoulderLength', points.neck.dist(points.shoulder))
+  store.set('shoulderLength', points.hps.dist(points.shoulder))
   store.set('neckOpeningPartFront', neckOpeningParts[1])
-  store.set('neckOpeningAnchorFront', points.neck)
-  store.set('shoulderSlopeDeltaY', points.neck.dy(points.shoulder))
+  store.set('neckOpeningAnchorFront', points.hps)
+  store.set('shoulderSlopeDeltaY', points.hps.dy(points.shoulder))
   store.set(
     'raglen',
     new Path()
