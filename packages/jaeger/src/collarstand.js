@@ -25,7 +25,7 @@ export default function(part) {
     'notch',
     'notchTip',
     'collarCorner',
-    'neck',
+    'hps',
     'shoulderRoll',
     'shoulderRollCb',
     'collarCbTop',
@@ -46,30 +46,30 @@ export default function(part) {
    * split this curve. We can use the control point as is.
    */
   points.collarstandCbBottom = points.collarCorner
-    .shiftOutwards(points.neck, store.get('backCollarLength') * 1.1) // * 1.1 = 10% too far
-    .rotate(store.get('shoulderSlope'), points.neck)
+    .shiftOutwards(points.hps, store.get('backCollarLength') * 1.1) // * 1.1 = 10% too far
+    .rotate(store.get('shoulderSlope'), points.hps)
   // Adjust curve to correct length
   points.collarstandCbBottom = new Path()
     .move(points.collarCorner)
-    ._curve(points.neck, points.collarstandCbBottom)
-    .shiftAlong(store.get('backCollarLength') + points.collarCorner.dist(points.neck)) // now it's correct
+    ._curve(points.hps, points.collarstandCbBottom)
+    .shiftAlong(store.get('backCollarLength') + points.collarCorner.dist(points.hps)) // now it's correct
 
   // Locate collarstand center back top point
-  points.collarCbTopDirection = points.neck.rotate(-90, points.collarstandCbBottom) // right direction, but too far
+  points.collarCbTopDirection = points.hps.rotate(-90, points.collarstandCbBottom) // right direction, but too far
   points.collarCbTop = points.collarstandCbBottom.shiftTowards(
     points.collarCbTopDirection,
     measurements.neckCircumference * options.collarHeight * 2
   )
 
   // Rotate points
-  let angle = -1 * points.collarstandCbBottom.angle(points.neck)
-  for (let i of Object.keys(points)) points[i] = points[i].rotate(angle, points.neck)
+  let angle = -1 * points.collarstandCbBottom.angle(points.hps)
+  for (let i of Object.keys(points)) points[i] = points[i].rotate(angle, points.hps)
 
   // Collarstand center back top point
   points.collarstandCbTop = points.collarstandCbBottom.shiftFractionTowards(points.collarCbTop, 0.3)
   points.collarstandCbTopCp = points.collarstandCbTop.shift(
-    points.collarstandCbBottom.angle(points.neck),
-    points.collarstandCbBottom.dist(points.neck)
+    points.collarstandCbBottom.angle(points.hps),
+    points.collarstandCbBottom.dist(points.hps)
   )
 
   // Spread collar
@@ -86,7 +86,7 @@ export default function(part) {
   // Now draft the collarstand
   points.leftCollarCorner = points.collarCorner.flipX(points.collarCbTop)
   points.leftCollarstandTip = points.collarstandTip.flipX(points.collarCbTop)
-  points.leftNeck = points.neck.flipX(points.collarCbTop)
+  points.leftNeck = points.hps.flipX(points.collarCbTop)
   points.leftCollarstandCbTopCp = points.collarstandCbTopCp.flipX(points.collarCbTop)
 
   // Clean up
@@ -96,7 +96,7 @@ export default function(part) {
   // Paths
   paths.seam = new Path()
     .move(points.collarCorner)
-    ._curve(points.neck, points.collarstandCbBottom)
+    ._curve(points.hps, points.collarstandCbBottom)
     .curve_(points.leftNeck, points.leftCollarCorner)
     .line(points.leftCollarstandTip)
     ._curve(points.leftCollarstandCbTopCp, points.collarstandCbTop)
@@ -112,7 +112,7 @@ export default function(part) {
     .line(points.notchTip)
     ._curve(points.collarCbTopCp, points.collarCbTop)
     .move(points.collarCorner)
-    ._curve(points.neck, points.collarstandCbBottom)
+    ._curve(points.hps, points.collarstandCbBottom)
     .line(points.collarstandCbTop)
     .curve_(points.collarstandCbTopCp, points.collarstandTip)
   */

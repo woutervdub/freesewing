@@ -55,7 +55,7 @@ export default function(part) {
     'backCollarLength',
     new Path()
       .move(points.cbNeck)
-      ._curve(points.neckCp2, points.neck)
+      ._curve(points.hpsCp2, points.hps)
       .length()
   )
 

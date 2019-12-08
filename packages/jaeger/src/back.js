@@ -73,7 +73,7 @@ export default function(part) {
   }
 
   // Store shoulder slope
-  store.set('shoulderSlope', Math.abs(points.neck.angle(points.shoulder) - 360))
+  store.set('shoulderSlope', Math.abs(points.hps.angle(points.shoulder) - 360))
 
   // Clean up - Remove this to understand what's going on
   for (let i of Object.keys(paths)) if (i !== 'vent') delete paths[i]
@@ -103,8 +103,8 @@ export default function(part) {
     .curve(points.waistCp2, points.bsArmholeHollowCp2, points.bsArmholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+    .curve_(points.hpsCp2, points.cbNeck)
   if (options.centerBackDart > 0)
     paths.saBase = paths.saBase._curve(points.cbChestCp1, points.cbChest)
   else paths.saBase = paths.saBase.line(points.cbChest)
@@ -141,12 +141,12 @@ export default function(part) {
     // Notches
     macro('sprinkle', {
       snippet: 'notch',
-      on: ['neck', 'shoulder', 'armholePitch', 'cbWaist', 'waist']
+      on: ['hps', 'shoulder', 'armholePitch', 'cbWaist', 'waist']
     })
     // Grainline
     macro('grainline', {
-      from: new Point(points.neck.x, points.hips.y),
-      to: points.neck
+      from: new Point(points.hps.x, points.hips.y),
+      to: points.hps
     })
 
     if (sa) {
@@ -160,28 +160,28 @@ export default function(part) {
     if (paperless) {
       macro('hd', {
         from: points.cbNeck,
-        to: points.neck,
-        y: points.neck.y - 15 - sa
+        to: points.hps,
+        y: points.hps.y - 15 - sa
       })
       macro('hd', {
         from: points.cbChest,
-        to: points.neck,
-        y: points.neck.y - 30 - sa
+        to: points.hps,
+        y: points.hps.y - 30 - sa
       })
       macro('hd', {
         from: points.cbChest,
         to: points.armholePitch,
-        y: points.neck.y - 45 - sa
+        y: points.hps.y - 45 - sa
       })
       macro('hd', {
         from: points.cbChest,
         to: points.shoulder,
-        y: points.neck.y - 60 - sa
+        y: points.hps.y - 60 - sa
       })
       macro('hd', {
         from: points.cbChest,
         to: points.bsArmholeHollow,
-        y: points.neck.y - 75 - sa
+        y: points.hps.y - 75 - sa
       })
       macro('vd', {
         from: points.bsArmholeHollow,
@@ -245,7 +245,7 @@ export default function(part) {
       })
       macro('vd', {
         from: paths.vent.end(),
-        to: points.neck,
+        to: points.hps,
         x: paths.vent.end().x - sa - 90
       })
       macro('ld', {
@@ -253,7 +253,7 @@ export default function(part) {
         to: points.waist
       })
       macro('ld', {
-        from: points.neck,
+        from: points.hps,
         to: points.shoulder,
         d: -15
       })

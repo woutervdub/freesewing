@@ -66,8 +66,8 @@ export default function(part) {
     'neckEdge',
     'cfNeck',
     'cfNeckCp1',
-    'neckCp2Front',
-    'neck',
+    'hpsCp2Front',
+    'hps',
     'shoulder',
     'shoulderCp1',
     'armholePitchCp2',
@@ -92,7 +92,7 @@ export default function(part) {
 
   // Lapel roll line
   let rollHeight = measurements.neckCircumference * options.rollLineCollarHeight
-  points.shoulderRoll = points.shoulder.shiftOutwards(points.neck, rollHeight)
+  points.shoulderRoll = points.shoulder.shiftOutwards(points.hps, rollHeight)
   let collarHeight = measurements.neckCircumference * options.collarHeight
   points.shoulderRollCb = points.lapelBreakPoint.shiftOutwards(
     points.shoulderRoll,
@@ -136,21 +136,21 @@ export default function(part) {
     90,
     points.neckEdge.dy(points.lapelStraightEnd) * 0.7
   )
-  angle = points.notch.angle(points.neck)
+  angle = points.notch.angle(points.hps)
   points._dir1 = points.notch.shift(angle / 2, 50)
-  points._dir2 = points.neck.shift(angle * 1.5 + 180, 50)
+  points._dir2 = points.hps.shift(angle * 1.5 + 180, 50)
   points.collarCorner = points.notch.shiftFractionTowards(points.notchMax, 1.6)
 
-  // Cut rollline back to collar line
   let shoulderRoll = utils.linesIntersect(
     points.shoulderRoll,
     points.lapelBreakPoint,
     points.notch,
     points.collarCorner
   )
-  // FIXME: Does this ever happen?
-  if (!shoulderRoll) throw new Error('Roll line does not intersect with notch/collarCorner line')
-  else points.shoulderRoll = shoulderRoll
+  // FIXME: See https://github.com/freesewing/freesewing/issues/227
+  if (!shoulderRoll) {
+    throw new Error('Roll line does not intersect with notch/collarCorner line')
+  } else points.shoulderRoll = shoulderRoll
 
   // Round the hem
   points.hemRoundTarget = new Point(points.hem.x, points.cfHem.y)
@@ -174,7 +174,7 @@ export default function(part) {
   points.roundStartCp1 = points.roundCp1.shiftOutwards(points.roundStart, cpDist)
 
   // Facing/lining boundary
-  points.facingTop = points.neck.shiftFractionTowards(points.shoulder, 0.2)
+  points.facingTop = points.hps.shiftFractionTowards(points.shoulder, 0.2)
   points.facingBottom = new Path()
     .move(points.roundStart)
     .curve(points.roundCp1, points.roundCp2, points.roundEnd)
@@ -261,7 +261,7 @@ export default function(part) {
     .move(points.split).line(points.splitEdge)
     .line(points.neckEdge)
     .line(points.cfNeck)
-    .curve(points.frontNeckCpEdge, points.neckCp2Front, points.neck)
+    .curve(points.frontNeckCpEdge, points.hpsCp2Front, points.hps)
     .line(points.shoulder)
     .curve(points.shoulderCp1, points.armholePitchCp2, points.armholePitch)
     .curve(points.armholePitchCp1, points.armholeHollowCp2, points.armholeHollow)
@@ -285,7 +285,7 @@ export default function(part) {
   paths.brzxclx = new Path()
     .move(points.notch)
     .line(points.collarCorner)
-    .line(points.neck)
+    .line(points.hps)
 
   */
 
@@ -298,7 +298,7 @@ export default function(part) {
     .curve(points.splitCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
+    .line(points.hps)
     .line(points.collarCorner)
     .line(points.notch)
     .line(points.notchEdge)
@@ -384,7 +384,7 @@ export default function(part) {
     macro('sprinkle', {
       snippet: 'notch',
       on: [
-        'neck',
+        'hps',
         'shoulder',
         'armholePitch',
         'chestPocketBottomLeft',
@@ -432,7 +432,7 @@ export default function(part) {
     if (paperless) {
       macro('vd', {
         from: points.notchEdge,
-        to: points.neck,
+        to: points.hps,
         x: points.lapelBreakPoint.x - 15 - sa
       })
       macro('vd', {
@@ -457,7 +457,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.facingBottom,
-        to: points.neck,
+        to: points.hps,
         x: points.lapelBreakPoint.x - 45 - sa
       })
       macro('hd', {
@@ -472,37 +472,37 @@ export default function(part) {
       })
       macro('hd', {
         from: points.notchEdge,
-        to: points.neck,
-        y: points.neck.y - 15 - sa
+        to: points.hps,
+        y: points.hps.y - 15 - sa
       })
       macro('hd', {
         from: points.lapelStraightEnd,
-        to: points.neck,
-        y: points.neck.y - 30 - sa
+        to: points.hps,
+        y: points.hps.y - 30 - sa
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.armholePitch,
-        y: points.neck.y - 45 - sa
+        y: points.hps.y - 45 - sa
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.shoulder,
-        y: points.neck.y - 60 - sa
+        y: points.hps.y - 60 - sa
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.fsArmhole,
-        y: points.neck.y - 75 - sa
+        y: points.hps.y - 75 - sa
       })
       macro('ld', {
-        from: points.neck,
+        from: points.hps,
         to: points.shoulder,
         d: -15
       })
       macro('ld', {
         from: points.collarCorner,
-        to: points.neck,
+        to: points.hps,
         d: -15
       })
       macro('ld', {
@@ -601,7 +601,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.fsArmhole,
-        to: points.neck,
+        to: points.hps,
         x: points.fsArmhole.x + 45 + sa
       })
       macro('hd', {
