@@ -17,10 +17,18 @@ const SampleConfigurator = props => {
     )
   }
 
-  const sampleMeasurement = measurement => {
+  const sampleBy = {
+    centerBackNeckToHips: 0.01,
+    hpsToHipsBack: 0.01,
+    shoulderSlope: 0.01
+  }
+
+  const sampleMeasurement = (measurement, by) => {
+    console.log({ by })
     props.updateGist(
       {
         type: 'measurement',
+        by,
         measurement
       },
       'settings',
@@ -59,7 +67,7 @@ const SampleConfigurator = props => {
         <ul style={{ paddingLeft: '1rem' }}>
           {props.config.measurements.map(m => (
             <li key={m}>
-              <a href="#logo" onClick={() => sampleMeasurement(m)}>
+              <a href="#logo" onClick={() => sampleMeasurement(m, sampleBy[m] || 0.1)}>
                 <FormattedMessage id={'measurements.' + m} />
               </a>
             </li>
