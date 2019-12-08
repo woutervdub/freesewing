@@ -95,7 +95,7 @@ const configTests = (pattern, pkg) => {
           // List option
           expect(Array.isArray(opt.list)).to.be.true
           expect(opt.list.indexOf(opt.dflt)).to.not.equal(-1)
-          expect(opt.list.length).to.be.greater.than(1)
+          expect(opt.list.length).to.be.above(1)
         }
       } else {
         expect(
