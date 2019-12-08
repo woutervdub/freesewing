@@ -15,7 +15,7 @@
   ],
   "main": "dist/index.js",
   "scripts": {
-    "clean": "rimraf Blockquote && rimraf Draft && rimraf DraftConfigurator && rimraf Emblem && rimraf Example && rimraf Footer && rimraf Icon && rimraf Logo && rimraf Navbar && rimraf Ogol && rimraf Robot && rimraf SampleConfigurator && rimraf withGist && rimraf withLanguage && rimraf Workbench",
+    "clean": "rimraf Blockquote && rimraf Draft && rimraf DraftConfigurator && rimraf Emblem && rimraf Example && rimraf Footer && rimraf Icon && rimraf Logo && rimraf Navbar && rimraf Ogol && rimraf Robot && rimraf SampleConfigurator && rimraf withGist && rimraf withLanguage && rimraf Workbench && rimraf Render && rimraf Spinner && rimraf LineDrawing && rimraf withStorage",
     "build": "npm run clean && rollup -c",
     "test": "BABEL_ENV=production ../../node_modules/.bin/mocha tests/*.test.js",
     "pubtest": "npm publish --registry http://localhost:6662",
