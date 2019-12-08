@@ -5,6 +5,12 @@ import theme from '@freesewing/plugin-theme'
 import templates from '../templates'
 
 const draftTests = (pattern, pkg, report = true) => {
+  const sampleBy = {
+    centerBackNeckToHips: 0.01,
+    hpsToHipsBack: 0.01,
+    shoulderSlope: 0.01
+  }
+
   // With or without breasts?
   let models = {}
   let breasts = 'with breasts'
@@ -57,7 +63,7 @@ const draftTests = (pattern, pkg, report = true) => {
         measurements: models.size40
       })
       draft.use(theme)
-      draft.sampleMeasurement(m)
+      draft.sampleMeasurement(m, sampleBy[m] || 0.1)
       let took = new Date() - start
       expect(draft.width).to.equal(0)
       expect(draft.height).to.equal(0)

@@ -146,7 +146,7 @@ Pattern.prototype.sample = function() {
   if (this.settings.sample.type === 'option') {
     return this.sampleOption(this.settings.sample.option)
   } else if (this.settings.sample.type === 'measurement') {
-    return this.sampleMeasurement(this.settings.sample.measurement)
+    return this.sampleMeasurement(this.settings.sample.measurement, this.settings.sample.by)
   } else if (this.settings.sample.type === 'models') {
     return this.sampleModels(this.settings.sample.models, this.settings.sample.focus || false)
   }
@@ -252,7 +252,7 @@ Pattern.prototype.sampleListOption = function(optionName) {
 /**
  * Handles measurement sampling
  */
-Pattern.prototype.sampleMeasurement = function(measurementName) {
+Pattern.prototype.sampleMeasurement = function(measurementName, by = 0.1) {
   this.is = 'sample'
   this.runHooks('preSample')
   let anchors = {}
@@ -260,8 +260,8 @@ Pattern.prototype.sampleMeasurement = function(measurementName) {
   let val = this.settings.measurements[measurementName]
   if (val === undefined)
     throw new Error('Cannot sample a measurement that is undefined: ' + measurementName)
-  let step = val / 50
-  val = val * 0.9
+  let step = (val * by) / 5
+  val = val * (1 - by)
   for (let run = 1; run < 11; run++) {
     this.settings.measurements[measurementName] = val
     this.debug({
