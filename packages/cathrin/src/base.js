@@ -18,7 +18,9 @@ export default function(part) {
     label: '✅ Back opening',
     msg: utils.units(store.get('backOpening'))
   })
-  let len = measurements.naturalWaistToUnderbust + measurements.naturalWaistToHip
+  let len =
+    measurements.naturalWaistToUnderbust +
+    (measurements.hpsToHipsBack - measurements.hpsToWaistBack)
   for (let option of ['backRise', 'backDrop', 'frontRise', 'frontDrop', 'hipRise'])
     store.set(option, len * options[option])
   store.set('length', len)

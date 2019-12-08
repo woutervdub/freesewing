@@ -1,51 +1,45 @@
-import { version } from "../package.json";
+import { version } from '../package.json'
 
 export default {
-  name: "cathrin",
+  name: 'cathrin',
   version,
-  design: ["Cathrin Åhlén", "Joost De Cock"],
-  code: "Joost De Cock",
-  department: "womenswear",
-  type: "pattern",
+  design: ['Cathrin Åhlén', 'Joost De Cock'],
+  code: 'Joost De Cock',
+  department: 'womenswear',
+  type: 'pattern',
   difficulty: 4,
-  tags: ["underwear", "top"],
+  tags: ['underwear', 'top'],
   optionGroups: {
-    fit: ["waistReduction", "panels"],
-    style: [
-      "backOpening",
-      "backRise",
-      "backDrop",
-      "frontRise",
-      "frontDrop",
-      "hipRise"
-    ]
+    fit: ['waistReduction', 'panels'],
+    style: ['backOpening', 'backRise', 'backDrop', 'frontRise', 'frontDrop', 'hipRise']
   },
   measurements: [
-    "underbust",
-    "naturalWaist",
-    "hipsCircumference",
-    "naturalWaistToUnderbust",
-    "naturalWaistToHip"
+    'underbust',
+    'naturalWaist',
+    'hipsCircumference',
+    'hpsToHipsBack',
+    'hpsToWaistBack',
+    'naturalWaistToUnderbust'
   ],
   dependencies: {
-    panel1: "panels",
-    panel2: "panels",
-    panel3: "panels",
-    panel4: "panels",
-    panel5: "panels",
-    panel6: "panels",
-    panels: "base"
+    panel1: 'panels',
+    panel2: 'panels',
+    panel3: 'panels',
+    panel4: 'panels',
+    panel5: 'panels',
+    panel6: 'panels',
+    panels: 'base'
   },
   inject: {
-    panel1: "panels",
-    panel2: "panels",
-    panel3: "panels",
-    panel4: "panels",
-    panel5: "panels",
-    panel6: "panels",
-    panels: "base"
+    panel1: 'panels',
+    panel2: 'panels',
+    panel3: 'panels',
+    panel4: 'panels',
+    panel5: 'panels',
+    panel6: 'panels',
+    panels: 'base'
   },
-  hide: ["panels", "base"],
+  hide: ['panels', 'base'],
   options: {
     // Lists
     panels: {
@@ -58,8 +52,8 @@ export default {
     backOpening: { pct: 4, min: 3, max: 10 },
     backRise: { pct: 15, min: 1, max: 25 },
     backDrop: { pct: 2, min: 0, max: 5 },
-    frontRise: { pct: 4, min: 0, max: 8 },
+    frontRise: { pct: 4, min: 0.5, max: 8 },
     frontDrop: { pct: 5, min: 0, max: 10 },
     hipRise: { pct: 5, min: 0, max: 15 }
   }
-};
+}
