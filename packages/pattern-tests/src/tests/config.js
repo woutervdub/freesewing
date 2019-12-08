@@ -12,14 +12,22 @@ const configTests = (pattern, pkg) => {
     expect(pattern.config.version).to.equal(pkg.version)
   })
 
-  it('Design should be a non-empty string', () => {
-    expect(typeof pattern.config.design).to.equal('string')
+  it('Design should be a non-empty string or array of strings', () => {
     expect(pattern.config.design).to.not.be.empty
+    if (Array.isArray(pattern.config.design)) {
+      for (let d of pattern.config.design) expect(typeof d).to.equal('string')
+    } else {
+      expect(typeof pattern.config.design).to.equal('string')
+    }
   })
 
-  it('Code should be a non-empty string', () => {
-    expect(typeof pattern.config.code).to.equal('string')
+  it('Code should be a non-empty string or array of strings', () => {
     expect(pattern.config.code).to.not.be.empty
+    if (Array.isArray(pattern.config.code)) {
+      for (let c of pattern.config.code) expect(typeof c).to.equal('string')
+    } else {
+      expect(typeof pattern.config.code).to.equal('string')
+    }
   })
 
   it('Department should be valid', () => {
