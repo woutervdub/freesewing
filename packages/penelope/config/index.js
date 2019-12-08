@@ -44,8 +44,9 @@ export default {
   },
   measurements: [
     'naturalWaist',
+    'hpsToHipsBack',
+    'hpsToWaistBack',
     'seatCircumference',
-    'naturalWaistToHip',
     'naturalWaistToSeat',
     'naturalWaistToKnee'
   ],

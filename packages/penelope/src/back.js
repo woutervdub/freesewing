@@ -22,7 +22,7 @@ export default function(part) {
   if (options.backVent == true) {
     // I don't care what you're trying to create, the vent will not go higher than your hips.
     let backVentLength = Math.min(
-      store.get('skirtLength') - measurements.naturalWaistToHip,
+      store.get('skirtLength') - (measurements.hpsToHipsBack - measurements.hpsToWaistBack),
       options.backVentLength * store.get('skirtLength')
     )
 

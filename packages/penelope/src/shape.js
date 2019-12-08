@@ -59,11 +59,11 @@ function BuildMainShape(part, frontPart) {
   points.rSeatCPup = new Point(sideSeam, (measurements.naturalWaistToSeat / 3) * 2)
   points.rSeatCPdown = points.rSeat.shift(
     270,
-    ((measurements.naturalWaistToSeat - measurements.naturalWaistToHip) *
+    ((measurements.naturalWaistToSeat -
+      (measurements.hpsToHipsBack - measurements.hpsToWaistBack)) *
       Math.abs((options.hemBonus * seat) / 10)) /
       options.hipCurveDividerDown
   )
-  //$p->newPoint('pH',   $sideSeam, $model->m('naturalWaistToHip') -$this->o('waistSideSeamRise'));
   let waistFactor = 0.99
   let sideFactor = 0.97
   let wdelta = 1
