@@ -23,7 +23,7 @@ export default function(part) {
   points.bustPoint = new Point(
     measurements.bustSpan / 2 +
       ((measurements.bustSpan / measurements.bust) * options.chestEase) / 4,
-    points.neck.y + measurements.highPointShoulderToBust
+    points.hps.y + measurements.highPointShoulderToBust
   )
 
   // Draw the princess seam (ps)
@@ -36,8 +36,8 @@ export default function(part) {
     .line(points.bustPoint)
     .curve_(points.bustPointCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
     .line(points.collarTip)
     ._curve(points.lapelStraightEndCp1, points.lapelStraightEnd)
     .line(points.hemEdge)
@@ -182,7 +182,7 @@ export default function(part) {
     // Round points depend on options, so add a check
     if (typeof points[i] !== 'undefined') {
       points[i] = points[i].shift(-90, longer)
-    } else console.log(i)
+    }
   }
 
   // Move the map/chest pocket into the princess seam
@@ -247,8 +247,8 @@ export default function(part) {
     .line(points.bustPoint)
     .curve_(points.bustPointCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
     .line(points.collarTip)
     ._curve(points.lapelStraightEndCp1, points.lapelStraightEnd)
     .line(points.hemEdge)
@@ -435,7 +435,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.armholePitch,
-        to: points.neck,
+        to: points.hps,
         x: points.shoulder.x + sa + 30
       })
       macro('vd', {
@@ -475,23 +475,23 @@ export default function(part) {
       })
       macro('hd', {
         from: points.lapelStraightEnd,
-        to: points.neck,
-        y: points.neck.y - sa - 15
+        to: points.hps,
+        y: points.hps.y - sa - 15
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.armholePitch,
-        y: points.neck.y - sa - 30
+        y: points.hps.y - sa - 30
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.shoulder,
-        y: points.neck.y - sa - 45
+        y: points.hps.y - sa - 45
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.armhole,
-        y: points.neck.y - sa - 60
+        y: points.hps.y - sa - 60
       })
     }
   }
