@@ -163,32 +163,32 @@ export default function(part) {
   points.innerPocketBottomRight = points.innerPocketBottomLeft.flipX(points.innerPocketAnchor)
 
   // Roll line
-  points.rollLineEdge = points.shoulder.shiftFractionTowards(points.neck, 1.15)
+  points.rollLineEdge = points.shoulder.shiftFractionTowards(points.hps, 1.15)
   points.rollLineStart = new Point(points.collarEdge.x, points.button3Left.y)
   points.rollLineEnd = utils.lineIntersectsCurve(
     points.rollLineStart,
     points.rollLineEdge,
     points.cfNeck,
     points.cfNeckCp1,
-    points.neckCp2Front,
-    points.neck
+    points.hpsCp2Front,
+    points.hps
   )
 
   // Facing/Lining border (flb)
   points.flbX = points.button1Right.shift(0, points.button1Right.dx(points.pocketTopLeft) / 2)
   points.flbHem = new Point(points.flbX.x, points.hemEdge.y)
   if (points.flbHem.x <= points.cfNeck.x) points.flbTop = new Point(points.flbX.x, points.cfNeck.y)
-  else if (points.flbHem.x < points.neck.x)
+  else if (points.flbHem.x < points.hps.x)
     points.flbTop = utils.lineIntersectsCurve(
       points.flbHem,
       points.flbX.shift(90, points.flbHem.y * 2),
       points.cfNeck,
       points.cfNeckCp1,
-      points.neckCp2Front,
-      points.neck
+      points.hpsCp2Front,
+      points.hps
     )
   else if (points.flbHem.x < points.shoulder.x)
-    points.flbTop = utils.beamsIntersect(points.flbHem, points.flbX, points.neck, points.shoulder)
+    points.flbTop = utils.beamsIntersect(points.flbHem, points.flbX, points.hps, points.shoulder)
   else throw new Error('Could not find intersection of facing/lining boundary with neckline')
 
   // Store collar length
@@ -196,7 +196,7 @@ export default function(part) {
     'frontCollarLength',
     new Path()
       .move(points.cfNeck)
-      .curve(points.cfNeckCp1, points.neckCp2Front, points.neck)
+      .curve(points.cfNeckCp1, points.hpsCp2Front, points.hps)
       .length()
   )
 
@@ -213,8 +213,8 @@ export default function(part) {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
     .line(points.collarTip)
     ._curve(points.lapelStraightEndCp1, points.lapelStraightEnd)
     .line(points.hemEdge)
@@ -409,7 +409,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.armhole,
-        to: points.neck,
+        to: points.hps,
         x: points.armhole.x + sa + 45
       })
       macro('vd', {
@@ -434,7 +434,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.hemEdge,
-        to: points.neck,
+        to: points.hps,
         x: points.rollLineStart.x - sa - 45
       })
       macro('hd', {
@@ -454,23 +454,23 @@ export default function(part) {
       })
       macro('hd', {
         from: points.lapelStraightEnd,
-        to: points.neck,
-        y: points.neck.y - sa - 15
+        to: points.hps,
+        y: points.hps.y - sa - 15
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.armholePitch,
-        y: points.neck.y - sa - 30
+        y: points.hps.y - sa - 30
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.shoulder,
-        y: points.neck.y - sa - 45
+        y: points.hps.y - sa - 45
       })
       macro('hd', {
         from: points.lapelStraightEnd,
         to: points.armhole,
-        y: points.neck.y - sa - 60
+        y: points.hps.y - sa - 60
       })
     }
   }

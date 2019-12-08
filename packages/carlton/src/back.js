@@ -19,7 +19,7 @@ export default function(part) {
 
   calculateRatios(part)
   // Belt width
-  let bw = measurements.centerBackNeckToWaist * options.beltWidth
+  let bw = measurements.hpsToWaistBack * options.beltWidth
   store.set('beltWidth', bw)
 
   // Box pleat (bp)
@@ -60,7 +60,7 @@ export default function(part) {
     'backCollarLength',
     new Path()
       .move(points.cbNeck)
-      ._curve(points.neckCp2, points.neck)
+      ._curve(points.hpsCp2, points.hps)
       .length()
   )
 
@@ -84,8 +84,8 @@ export default function(part) {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+    .curve_(points.hpsCp2, points.cbNeck)
   paths.seam = paths.seam1
     .join(paths.dart)
     .join(paths.seam2)
@@ -196,7 +196,7 @@ export default function(part) {
       })
       macro('vd', {
         from: points.bpBottom,
-        to: points.neck,
+        to: points.hps,
         x: points.bpTop.x - 30 - sa
       })
       macro('vd', {
@@ -211,23 +211,23 @@ export default function(part) {
       })
       macro('hd', {
         from: points.cbNeck,
-        to: points.neck,
-        y: points.neck.y - 15 - sa
+        to: points.hps,
+        y: points.hps.y - 15 - sa
       })
       macro('hd', {
         from: points.cbNeck,
         to: points.armholePitch,
-        y: points.neck.y - 30 - sa
+        y: points.hps.y - 30 - sa
       })
       macro('hd', {
         from: points.cbNeck,
         to: points.shoulder,
-        y: points.neck.y - 45 - sa
+        y: points.hps.y - 45 - sa
       })
       macro('hd', {
         from: points.cbNeck,
         to: points.armhole,
-        y: points.neck.y - 60 - sa
+        y: points.hps.y - 60 - sa
       })
     }
   }
