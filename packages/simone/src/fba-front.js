@@ -37,7 +37,7 @@ export default part => {
    */
   points.bust = new Point(
     measurements.bustSpan / 2,
-    points.neck.y + measurements.highPointShoulderToBust
+    points.hps.y + measurements.highPointShoulderToBust
   )
 
   /*
@@ -292,7 +292,7 @@ export default part => {
       'hips',
       'waist',
       'bust_rot2',
-      'neck',
+      'hps',
       'shoulder'
     ]
   })
@@ -317,8 +317,8 @@ export default part => {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
 
   switch (options.hemStyle) {
     case 'baseball':
