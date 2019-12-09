@@ -65,7 +65,10 @@ const configTests = (pattern, pkg) => {
       }
     }
 
-    for (let o of options) expect(optionsInGroup.indexOf(o)).to.not.equal(-1)
+    for (let o of options) {
+      if (optionsInGroup.indexOf(o) === -1) console.log('Missing in optiongroups:', o)
+      expect(optionsInGroup.indexOf(o)).to.not.equal(-1)
+    }
     expect(options.length).to.equal(optionsInGroup.length)
   })
 
