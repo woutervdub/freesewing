@@ -18,17 +18,21 @@ export default part => {
   points.waist.x = (measurements.naturalWaist * (1 + options.waistEase)) / 4
   points.hips.x = (measurements.hipsCircumference * (1 + options.hipsEase)) / 4
   points.hem.x = points.hips.x
-  points.hipsCp2 = points.hips.shift(90, measurements.naturalWaistToHip / 3)
-  points.waistCp1 = points.waist.shift(-90, measurements.naturalWaistToHip / 3)
-  points.waistCp2 = points.waist.shift(90, measurements.centerBackNeckToWaist / 4)
+  points.hipsCp2 = points.hips.shift(
+    90,
+    (measurements.hpsToHipsBack - measurements.hpsToWaistBack) / 3
+  )
+  points.waistCp1 = points.waist.shift(
+    -90,
+    (measurements.hpsToHipsBack - measurements.hpsToWaistBack) / 3
+  )
+  points.waistCp2 = points.waist.shift(90, measurements.hpsToWaistBack / 4)
 
   if (options.ribbing) {
     // Adapt lengtht for ribbing
     let ribbingHeight
     if (typeof store.get('ribbingHeight') === 'undefined') {
-      ribbingHeight =
-        (measurements.centerBackNeckToWaist + measurements.naturalWaistToHip) *
-        options.ribbingHeight
+      ribbingHeight = measurements.hpsToHipsBack * options.ribbingHeight
       store.set('ribbingHeight', ribbingHeight)
     } else ribbingHeight = store.get('ribbingHeight')
     points.hem = points.hem.shift(90, ribbingHeight)
@@ -45,9 +49,9 @@ export default part => {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-  if (front) paths.saBase.curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
-  else paths.saBase.curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+  if (front) paths.saBase.curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
+  else paths.saBase.curve_(points.hpsCp2, points.cbNeck)
   if (front) paths.hemBase = new Path().move(points.cfHem).line(points.hem)
   else paths.hemBase = new Path().move(points.cbHem).line(points.hem)
 
@@ -107,10 +111,10 @@ export default part => {
     })
     macro('vd', {
       from: points.hips,
-      to: points.neck,
+      to: points.hps,
       x: points.hips.x + sa + 75
     })
-    macro('ld', { from: points.neck, to: points.shoulder, d: sa + 15 })
+    macro('ld', { from: points.hps, to: points.shoulder, d: sa + 15 })
   }
 
   return part
