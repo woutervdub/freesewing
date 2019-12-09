@@ -1,24 +1,20 @@
-import { version } from "../package.json";
+import { version } from '../package.json'
 
 export default {
-  name: "shin",
+  name: 'shin',
   version: version,
-  design: "Joost De Cock",
-  code: "Joost De Cock",
-  department: "menswear",
-  type: "pattern",
+  design: 'Joost De Cock',
+  code: 'Joost De Cock',
+  department: 'menswear',
+  type: 'pattern',
   difficulty: 2,
-  tags: ["swimwear", "bottom"],
+  tags: ['swimwear', 'bottom'],
   optionGroups: {
-    fit: ["bulge", "backRise", "legReduction", "stretch"],
-    style: ["lengthBonus", "rise"]
+    fit: ['bulge', 'backRise', 'legReduction', 'stretch'],
+    style: ['elasticWidth', 'lengthBonus', 'rise']
   },
-  measurements: [
-    "hipsCircumference",
-    "upperLegCircumference",
-    "hipsToUpperLeg"
-  ],
-  parts: ["back", "front", "waistband"],
+  measurements: ['hipsCircumference', 'upperLegCircumference', 'hipsToUpperLeg'],
+  parts: ['back', 'front', 'waistband'],
   options: {
     // Constants
     frontFactor: 0.58,
@@ -32,9 +28,9 @@ export default {
     // Percentages
     stretch: { pct: 20, min: 10, max: 30 },
     bulge: { pct: 2.5, min: 0, max: 5 },
-    legReduction: { pct: 5, min: 0, max: 10 },
+    legReduction: { pct: 5, min: 0.5, max: 9 },
     lengthBonus: { pct: 0, min: 0, max: 50 },
     rise: { pct: 0, min: 0, max: 25 },
     backRise: { pct: 5, min: 0, max: 10 }
   }
-};
+}
