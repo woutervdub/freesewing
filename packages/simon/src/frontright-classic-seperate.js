@@ -18,8 +18,8 @@ export default part => {
     new Point(width / -2, points.cfNeck.y - 20),
     points.cfNeck,
     points.cfNeckCp1,
-    points.neckCp2Front,
-    points.neck
+    points.hpsCp2Front,
+    points.hps
   )
   points.placketBottomIn = points.cfHem.shift(180, width / 2)
   paths.seam = paths.seam.split(points.placketTopIn)[0]
@@ -43,18 +43,18 @@ export default part => {
   // Paperless?
   if (paperless) {
     macro('hd', {
-      from: points.neck,
+      from: points.hps,
       to: points.placketTopIn,
-      y: points.neck.y - sa - 15
+      y: points.hps.y - sa - 15
     })
     macro('hd', {
       from: points.shoulder,
       to: points.placketTopIn,
-      y: points.neck.y - sa - 30
+      y: points.hps.y - sa - 30
     })
     macro('vd', {
       from: points.placketTopIn,
-      to: points.neck,
+      to: points.hps,
       x: points.placketTopIn.x + sa + 15
     })
     macro('vd', {

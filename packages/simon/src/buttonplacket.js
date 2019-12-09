@@ -33,8 +33,8 @@ export default part => {
     new Point(width / -2, points.cfNeck.y - 20),
     points.cfNeck,
     points.cfNeckCp1,
-    points.neckCp2Front,
-    points.neck
+    points.hpsCp2Front,
+    points.hps
   )
   points.placketTopOut = points.cfNeck.shift(0, width / 2)
   points.placketTopEdge = points.cfNeck.shift(0, width * 1.5)

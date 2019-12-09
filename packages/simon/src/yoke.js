@@ -23,14 +23,14 @@ export default part => {
     .move(points.cbYoke)
     .line(points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+    .curve_(points.hpsCp2, points.cbNeck)
   if (options.splitYoke) paths.saBase = paths.saBase.line(points.cbYoke).close()
   else {
-    for (let p of ['neckCp2', 'neck', 'shoulder', 'shoulderCp1', 'armholePitchCp2', 'armholePitch'])
+    for (let p of ['hpsCp2', 'hps', 'shoulder', 'shoulderCp1', 'armholePitchCp2', 'armholePitch'])
       points['_' + p] = points[p].flipX()
     paths.saBase
-      ._curve(points._neckCp2, points._neck)
+      ._curve(points._hpsCp2, points._hps)
       .line(points._shoulder)
       .curve(points._shoulderCp1, points._armholePitchCp2, points._armholePitch)
       .line(points.cbYoke)
@@ -43,7 +43,7 @@ export default part => {
   // Complete pattern?
   if (complete) {
     delete snippets.armholePitchNotch
-    points.title = new Point(points.neck.x, points.cbYoke.y / 3)
+    points.title = new Point(points.hps.x, points.cbYoke.y / 3)
     macro('title', { at: points.title, nr: 4, title: 'yoke', scale: 0.8 })
     points.logo = points.title.shift(-90, 50)
     snippets.logo = new Snippet('logo', points.logo)
@@ -65,7 +65,7 @@ export default part => {
 
     macro('sprinkle', {
       snippet: 'notch',
-      on: ['neck', 'shoulder']
+      on: ['hps', 'shoulder']
     })
 
     if (sa) {
@@ -82,16 +82,16 @@ export default part => {
   // Paperless?
   if (paperless) {
     macro('pd', {
-      path: new Path().move(points.cbNeck)._curve(points.neckCp2, points.neck),
+      path: new Path().move(points.cbNeck)._curve(points.hpsCp2, points.hps),
       d: 15
     })
     macro('hd', {
       from: points.cbNeck,
-      to: points.neck,
-      y: points.neck.y - 15 - sa
+      to: points.hps,
+      y: points.hps.y - 15 - sa
     })
     macro('ld', {
-      from: points.neck,
+      from: points.hps,
       to: points.shoulder,
       d: 15 + sa
     })

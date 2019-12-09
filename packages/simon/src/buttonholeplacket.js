@@ -32,8 +32,8 @@ export default part => {
     new Point(points.cfNeck.x + fold * 2, points.cfNeck.y - 20),
     points.cfNeck,
     points.cfNeckCp1,
-    points.neckCp2Front,
-    points.neck
+    points.hpsCp2Front,
+    points.hps
   )
   points.bottomInnerEdge = new Point(points.topInnerEdge.x, points.cfHem.y)
 
@@ -57,7 +57,7 @@ export default part => {
   paths.saBase = new Path()
     .move(points.placketTopEdge)
     .line(points.cfNeck)
-    .curve(points.cfNeckCp1, points.neckCp2Front, points.neck)
+    .curve(points.cfNeckCp1, points.hpsCp2Front, points.hps)
     .split(points.topInnerEdge)[0]
     .line(points.bottomInnerEdge)
 

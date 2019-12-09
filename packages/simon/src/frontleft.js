@@ -9,7 +9,7 @@ export default part => {
   if (complete && paperless) {
     frontDimensions(part, 'left')
     macro('ld', {
-      from: points.neck,
+      from: points.hps,
       to: points.shoulder,
       d: 15 + sa
     })

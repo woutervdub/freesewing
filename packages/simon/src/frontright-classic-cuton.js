@@ -20,8 +20,8 @@ export default part => {
     new Point(width / -2, points.cfNeck.y - 20),
     points.cfNeck,
     points.cfNeckCp1,
-    points.neckCp2Front,
-    points.neck
+    points.hpsCp2Front,
+    points.hps
   )
   points.placketTopOut = points.cfNeck.shift(0, width / 2)
   points.placketTopEdge = points.cfNeck.shift(0, width * 1.5)
@@ -94,14 +94,14 @@ export default part => {
       y: points.placketTopEdge.y - 45 - sa
     })
     macro('hd', {
-      from: points.neck,
+      from: points.hps,
       to: points.placketTopEdge,
-      y: points.neck.y - 15 - sa
+      y: points.hps.y - 15 - sa
     })
     macro('hd', {
       from: points.shoulder,
       to: points.placketTopEdge,
-      y: points.neck.y - 30 - sa
+      y: points.hps.y - 30 - sa
     })
     points.button0 = points.placketTopEdge
     let j

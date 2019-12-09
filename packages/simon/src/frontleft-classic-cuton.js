@@ -146,7 +146,7 @@ export default part => {
     }
     macro('hd', {
       from: points.placketTopEdge,
-      to: points.neck,
+      to: points.hps,
       y: points.placketTopEdge.y - offset - sa - 15
     })
     macro('hd', {

@@ -13,7 +13,7 @@ export default part => {
       frontDimensions(part, 'right')
       macro('ld', {
         from: points.shoulder,
-        to: points.neck,
+        to: points.hps,
         d: 15 + sa
       })
       if (sa) {

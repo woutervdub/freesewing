@@ -57,8 +57,8 @@ export default part => {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2Front, points.cfNeckCp1, points.cfNeck)
+    .line(points.hps)
+    .curve(points.hpsCp2Front, points.cfNeckCp1, points.cfNeck)
   switch (options.hemStyle) {
     case 'baseball':
       points.bballStart = points.cfHem.shiftFractionTowards(points.hem, 0.5)
@@ -120,7 +120,7 @@ export default part => {
         'waist',
         'armholePitch',
         'shoulder',
-        'neck',
+        'hps',
         'hips',
         'cfHips',
         'cfWaist',
