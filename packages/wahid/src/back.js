@@ -20,7 +20,7 @@ export default part => {
   delete snippets.armholePitchNotch
 
   // Back inset
-  let shoulderLen = points.shoulder.dist(points.neck)
+  let shoulderLen = points.shoulder.dist(points.hps)
   let backInset = shoulderLen * options.backInset
   points.armholePitch = points.armholePitch.shift(180, backInset)
   points.armholePitchCp1 = points.armholePitchCp1.shift(180, backInset)
@@ -30,9 +30,9 @@ export default part => {
   points.armholeHollowCp1 = points.armholeHollowCp1.shift(180, backInset / 2)
 
   // Shoulder inset
-  points.shoulder = points.shoulder.shiftTowards(points.neck, shoulderLen * options.shoulderInset)
+  points.shoulder = points.shoulder.shiftTowards(points.hps, shoulderLen * options.shoulderInset)
   points.shoulderCp1 = points.shoulderCp1.shift(
-    points.shoulder.angle(points.neck),
+    points.shoulder.angle(points.hps),
     shoulderLen * options.shoulderInset
   )
 
@@ -40,13 +40,13 @@ export default part => {
     .move(points.shoulder)
     .curve(points.shoulderCp1, points.armholePitchCp2, points.armholePitch)
   // Neck inset
-  points.neck = points.neck.shiftTowards(points.shoulder, shoulderLen * options.neckInset)
-  points.neckCp2 = points.neck.shift(points.shoulder.angle(points.neck) + 90, shoulderLen * 0.1)
+  points.hps = points.hps.shiftTowards(points.shoulder, shoulderLen * options.neckInset)
+  points.hpsCp2 = points.hps.shift(points.shoulder.angle(points.hps) + 90, shoulderLen * 0.1)
 
   // Center back dart
   points.cbNeck = new Path()
     .move(points.cbNeck)
-    ._curve(points.neckCp2, points.neck)
+    ._curve(points.hpsCp2, points.hps)
     .shiftAlong(measurements.shoulderToShoulder * options.centerBackDart)
   points.cbNeckCp2 = new Point(0, points.armholePitch.y)
 
@@ -71,7 +71,7 @@ export default part => {
     .intersects(new Path().move(points.cbNeckCp2).line(points._dartWidth))
     .pop()
   // Rotate back scye dart into center back
-  let toRotate = ['cbNeck', 'neckCp2', 'neck', 'shoulder', 'shoulderCp1']
+  let toRotate = ['cbNeck', 'hpsCp2', 'hps', 'shoulder', 'shoulderCp1']
   for (let p of toRotate) {
     points[p] = points[p].rotate(options.backScyeDart, points.cbNeckCp2)
   }
@@ -88,8 +88,8 @@ export default part => {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve_(points.neckCp2, points.cbNeck)
+    .line(points.hps)
+    .curve_(points.hpsCp2, points.cbNeck)
     ._curve(points.cbNeckCp2, points.cbArmhole)
     .line(points.cbHem)
   paths.hemBase = new Path().move(points.cbHem).line(points.hem)
@@ -115,7 +115,7 @@ export default part => {
 
     if (paperless) {
       macro('ld', {
-        from: points.neck,
+        from: points.hps,
         to: points.shoulder,
         d: 15 + sa
       })
@@ -126,7 +126,7 @@ export default part => {
       })
       macro('hd', {
         from: points.cbArmhole,
-        to: points.neck,
+        to: points.hps,
         y: points.cbNeck.y - 30 - sa
       })
       macro('hd', {
@@ -156,7 +156,7 @@ export default part => {
       })
       macro('vd', {
         from: points.armhole,
-        to: points.neck,
+        to: points.hps,
         x: points.armhole.x + 45 + sa
       })
       macro('vd', {
@@ -204,7 +204,7 @@ export default part => {
       })
       macro('vd', {
         from: points.cbHem,
-        to: points.neck,
+        to: points.hps,
         x: points.cbHem.x - 45 - sa
       })
     }

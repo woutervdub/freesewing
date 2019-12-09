@@ -28,12 +28,12 @@ export default part => {
     points.waist.y * options.necklineDrop
   )
   if (options.frontStyle === 'classic')
-    points.closureTopCp1 = new Point(points.neck.x, (points.waist.y * options.necklineDrop) / 2)
+    points.closureTopCp1 = new Point(points.hps.x, (points.waist.y * options.necklineDrop) / 2)
   else {
-    points.closureTopCp1 = new Point(points.neck.x, points.closureTop.y)
+    points.closureTopCp1 = new Point(points.hps.x, points.closureTop.y)
   }
   // Front inset
-  let shoulderLen = points.shoulder.dist(points.neck)
+  let shoulderLen = points.shoulder.dist(points.hps)
   let frontInset = shoulderLen * options.frontInset
   points.armholePitch = points.armholePitch.shift(180, frontInset)
   points.armholePitchCp1 = points.armholePitchCp1.shift(180, frontInset)
@@ -43,15 +43,15 @@ export default part => {
   points.armholeHollowCp1 = points.armholeHollowCp1.shift(180, frontInset / 2)
 
   // Shoulder inset
-  points.shoulder = points.shoulder.shiftTowards(points.neck, shoulderLen * options.shoulderInset)
+  points.shoulder = points.shoulder.shiftTowards(points.hps, shoulderLen * options.shoulderInset)
   points.shoulderCp1 = points.shoulderCp1.shift(
-    points.shoulder.angle(points.neck),
+    points.shoulder.angle(points.hps),
     shoulderLen * options.shoulderInset
   )
 
   // Neck inset
-  points.neck = points.neck.shiftTowards(points.shoulder, shoulderLen * options.neckInset)
-  points.neckCp2 = points.neck.shift(points.shoulder.angle(points.neck) + 90, shoulderLen * 0.2)
+  points.hps = points.hps.shiftTowards(points.shoulder, shoulderLen * options.neckInset)
+  points.hpsCp2 = points.hps.shift(points.shoulder.angle(points.hps) + 90, shoulderLen * 0.2)
 
   // Construct main dart
   constructMainDart(part)
@@ -208,8 +208,8 @@ export default part => {
     .curve(points.armholeCp2, points.armholeHollowCp1, points.armholeHollow)
     .curve(points.armholeHollowCp2, points.armholePitchCp1, points.armholePitch)
     .curve(points.armholePitchCp2, points.shoulderCp1, points.shoulder)
-    .line(points.neck)
-    .curve(points.neckCp2, points.closureTopCp1, points.closureTop)
+    .line(points.hps)
+    .curve(points.hpsCp2, points.closureTopCp1, points.closureTop)
   if (options.hemStyle === 'classic') {
     paths.saBase
       .line(points.closureBottom)
@@ -260,7 +260,7 @@ export default part => {
     }
 
     // Facing/Lining boundary (flb)
-    points.flbTop = points.neck.shiftFractionTowards(points.shoulder, 0.5)
+    points.flbTop = points.hps.shiftFractionTowards(points.shoulder, 0.5)
     points.flbCp = points.dartTop.shift(90, points.dartTop.dist(points.flbTop) / 2)
     paths.flbFacing = new Path()
       .move(points.dartTop)
@@ -278,26 +278,26 @@ export default part => {
     if (paperless) {
       macro('hd', {
         from: points.closureTop,
-        to: points.neck,
-        y: points.neck.y - 15 - sa
+        to: points.hps,
+        y: points.hps.y - 15 - sa
       })
       macro('hd', {
         from: points.closureTop,
         to: points.shoulder,
-        y: points.neck.y - 30 - sa
+        y: points.hps.y - 30 - sa
       })
       macro('hd', {
         from: points.closureTop,
         to: points.armhole,
-        y: points.neck.y - 45 - sa
+        y: points.hps.y - 45 - sa
       })
       macro('ld', {
-        from: points.neck,
+        from: points.hps,
         to: points.shoulder,
         d: 15 + sa
       })
       macro('ld', {
-        from: points.neck,
+        from: points.hps,
         to: points.flbTop,
         d: -15
       })
@@ -308,7 +308,7 @@ export default part => {
       })
       macro('vd', {
         from: points.armhole,
-        to: points.neck,
+        to: points.hps,
         x: points.armhole.x + 30 + sa
       })
       macro('vd', {
@@ -416,7 +416,7 @@ export default part => {
       }
       macro('vd', {
         from: points.closureTop,
-        to: points.neck,
+        to: points.hps,
         x: points.closureTop.x - 15 - sa
       })
       macro('vd', {

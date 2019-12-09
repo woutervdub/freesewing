@@ -19,7 +19,7 @@ export const constructMainDart = part => {
   points.dartWaistCenter = new Point(points.armhole.x / 2, points.waist.y)
   points.dartWaistRight = points.dartWaistCenter.shift(0, wr12)
   points.dartWaistLeft = points.dartWaistCenter.shift(180, wr12)
-  points.dartTop = points.dartWaistCenter.shift(90, points.neck.dy(points.waist) * 0.35)
+  points.dartTop = points.dartWaistCenter.shift(90, points.hps.dy(points.waist) * 0.35)
   points.dartWaistRightCpTop = points.dartWaistRight.shift(
     90,
     points.dartTop.dy(points.waist) * 0.35
