@@ -19,20 +19,22 @@ export default function(part) {
     .shift()
   paths.waist.render = false
 
-  // Split side curve
-  paths.side = new Path()
-    .move(points[-8])
-    .curve(points[-802], points[-1401], points[-14])
-    .split(points[61])
-    .shift()
-    .reverse()
-  paths.side.render = false
-
   paths.seam = new Path()
     .move(points.topLeft)
     .line(points.bottomLeft)
     .line(points[61])
-    .join(paths.side)
+  if (points[61].y > points[-8].y) {
+    // Split side curve
+    paths.side = new Path()
+      .move(points[-8])
+      .curve(points[-802], points[-1401], points[-14])
+      .split(points[61])
+      .shift()
+      .reverse()
+    paths.side.render = false
+    paths.seam.join(paths.side)
+  }
+  paths.seam
     .curve_(points[-801], points[-1102])
     .join(paths.waist)
     .close()
