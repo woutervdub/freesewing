@@ -30,7 +30,7 @@ export default function(part) {
       'bottomCircumference',
       store.get('topCircumference') +
         (options.waistbandWidth * (measurements.hipsCircumference - measurements.naturalWaist)) /
-          measurements.naturalWaistToHip
+          (measurements.hpsToHipsBack - measurements.hpsToWaistBack)
     )
   } else {
     // If the waistband is straight, the bottom circumference is the same as the top circumference
@@ -46,7 +46,8 @@ export default function(part) {
   // The length from the top of the skirt to the floor (max length available)
   store.set(
     'fullLength',
-    measurements.naturalWaistToFloor - measurements.naturalWaistToHip * options.waistbandPosition
+    measurements.naturalWaistToFloor -
+      (measurements.hpsToHipsBack - measurements.hpsToWaistBack) * options.waistbandPosition
   )
 
   let radiusWaist, an
