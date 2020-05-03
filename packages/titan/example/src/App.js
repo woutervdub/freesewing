@@ -12,7 +12,7 @@ const App = (props) => {
 
   // Adding untranslated strings
   let translations = {
-    'measurements.anklEntry': 'Ankle entry',
+    'measurements.ankleEntry': 'Ankle entry',
     'measurements.backWaist': 'Back waist',
     'measurements.crotchDepth': 'Crotch depth',
     'measurements.crotchLength': 'Crotch length',

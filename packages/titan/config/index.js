@@ -19,7 +19,7 @@ export default {
     'crotchLength',
     'frontCrotchLength',
     'frontHip',
-    'hipCircumference',
+    'hipsCircumference',
     'kneeCircumference',
     'naturalWaist',
     'naturalWaistToFloor',
