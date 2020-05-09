@@ -6,43 +6,17 @@ As provided by @dfbean
 | ------------------------------------------------------------ | ------------ | ---------------- | --------------- | ---------------- | ------------------------------ |
 | Make a point, label A                                        |              |                  |                 |                  |                                |
 | Square line down # from A, mark point at end, label D        | crotch depth | 31.1             | 311             |                  | used `crotchDepth` measurement |
-| On line A-D, measure # from point A, mark new point, label C | hip depth    | 22.9             |
+| On line A-D, measure # from point A, mark new point, label C | hip depth    | 22.9             | 229                | | used `naturalWaistToSeat` measurement |
+| From point A, square a line # left, mark endpoint, label H | back hip arc + .3cm | 28.2 | -281.79 | .3cm for ease | used `hipsEase` option, `backHipArc` measurement provided by the `measurements` plugin (part of titan for now) |
+| From point C, square a line # left, mark endpoint, label F | back hip arc + .3cm | 28.2 | -281.79 | .3cm for ease | |
+| From point D, square a line #, mark endpoint, label I | Use greater of 1.25 x (back hip arc + .3) | 35.3 | 352.2375 |this step incorporates a subsequent fit check, and includes some adjustments required to draft this piece independent of the front piece. | |
+| | **OR**, (upperleg + 3.8 + 1.9) – (front hip arc + .3+ front crotch extension) | (64.8 + 3.8 + 1.9) – (25.4 +.3 +5.7) = 39.1 | 393.23 | Includes 3.8 cm recommended crotch ease and 1.9cm placeholder that will be removed later. | used `upperLegEase` and `crotchExtension` options. `crotchExtension` being based on `hipsCircumference` measurement |
+| Starting at point H, square down through point F, till intersecting with line D-I. Label intersection point G | | | | | |
+| On line G-H, measure # from point G, mark endpoint, label X | .5(crotch depth) | 15.6 | 155.5 | | |
+| On line A-H, measure # from point H, toward point A, mark point, label N | 4.5 | 4.5 | 45.1 | Fixed value, sets reference point for back waist | **Note:** This doesn't work for us. We can't just put in an arbitrary 4.5cm value. That doesn't scale. So I've added a static option called `backWaistFactor` that is 14.5% of the `crotchDepth` measurement. That way, the slant of the back seam should always be the same. This might need tweaking though. |
+| On line A-H, measure from point N toward point A, # mark endpoint, label O | back waist arc + 2.5 | 22.8 | 227.36 | 2.5 fixed value for dart width. Ok that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | **Note:** I've added the `backWaistDart` option which is 12% of the `backWaistArc` measurement, which gives us 24.36mm |
 
-22.9
-From point A, square a line # left, mark endpoint, label H back hip arc + .3cm 28.2 .3cm for ease
-From point C, square a line # left, mark endpoint, label F back hip arc + .3cm 28.2 .3cm for ease
-From point D, square a line #, mark endpoint, label I Use greater of
-1.25 x (back hip
-arc + .3) 35.3 this step incorporates a subsequent fit check, and
-includes some adjustments required to draft this
-piece independent of the front piece.
-OR, (upperleg +
-3.8 + 1.9) – (front
-hip arc + .3+ front
-crotch extension) (64.8 + 3.8 + 1.9)
-– (25.4 +.3 +5.7)
-=39.1 Includes 3.8 cm recommended crotch ease and
-1.9cm placeholder that will be removed later.
-Front
-crotch extension values are hips <94.0 =4.8,
-hips 94.1-106.4 = 5.1, hips >106.5 = 5.7.
-These values
-are supplied by Armstrong. They're probably fine
-but the drafting instructions only go to American
-size 18 (hips 111) and I'm not sure how they'll
-work for larger folks. Should try to test this so
-there's no surprises.
-Starting at point H, square down through point F, till
-intersecting with line D-I. Label intersection point G
-On line G-H, measure # from point G, mark endpoint, label
-X .5(crotch depth) 15.6 On line A-H, measure # from point H, toward point A, mark
-point, label N 4.5 4.5 Fixed value, sets reference point for back waist.
-On line A-H, measure from point N toward point A, # mark
-endpoint, label O back waist arc +
-2.5 22.8 2.5 fixed value for dart width. Ok that it's fixed, it's
-mostly a placeholder and gets removed, rolled or
-replaced in pant patterns. If additional shaping is
-required it can be placed in hip curve.
+
 On line A-H, measure from point N # toward O, mark
 endpoint, label P .5 (back waist arc + 11.4
 2.5) 2.5 fixed value for dart placement.
