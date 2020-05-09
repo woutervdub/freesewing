@@ -16,9 +16,7 @@ As provided by @dfbean
 | On line A-H, measure # from point H, toward point A, mark point, label N | 4.5 | 4.5 | 45.1 | Fixed value, sets reference point for back waist | **Note:** This doesn't work for us. We can't just put in an arbitrary 4.5cm value. That doesn't scale. So I've added a static option called `backWaistFactor` that is 14.5% of the `crotchDepth` measurement. That way, the slant of the back seam should always be the same. This might need tweaking though. |
 | On line A-H, measure from point N toward point A, # mark endpoint, label O | back waist arc + 2.5 | 22.8 | 227.36 | 2.5 fixed value for dart width. Ok that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | **Note:** I've added the `backWaistDart` option which is 12% of the `backWaistArc` measurement, which gives us 24.36mm |
 | On line A-H, measure from point N # toward O, mark endpoint, label P | .5 (back waist arc + 2.5) | 11.4 | 113.68 | 2.5 fixed value for dart placement. | went with time .56 instead of fixed value |
-
-
-| Square line # down from P, mark endpoint, no label | 8.9 | 88.64 | Fixed value for dart length. See previous note onfixed dart value. | Added the `backWaistDartLength` option, which is based on the `crotchDepth` measurement. 28.5%  by default |
+| Square line # down from P, mark endpoint, no label | | 8.9 | 88.64 | Fixed value for dart length. See previous note onfixed dart value. | Added the `backWaistDartLength` option, which is based on the `crotchDepth` measurement. 28.5%  by default |
 
 
 Square out # from P on both sides, mark endpoints, no
