@@ -2,24 +2,38 @@ import freesewing from '@freesewing/core'
 import plugins from '@freesewing/plugin-bundle'
 import config from '../config'
 // Parts
-import draftInterfacingTip from './interfacingtip'
-import draftInterfacingTail from './interfacingtail'
-import draftFabricTip from './fabrictip'
-import draftFabricTail from './fabrictail'
-import draftLiningTip from './liningtip'
-import draftLiningTail from './liningtail'
-import draftLoop from './loop'
+import draftBack from './back'
+
+const pluginMeasurements = {
+  name: 'measurements',
+  version: '0.0.1',
+  hooks: {
+    preDraft: function ({ settings }) {
+      if (
+        typeof settings.measurements.frontHips !== 'undefined' &&
+        typeof settings.measurements.hipsCircumference !== 'undefined'
+      ) {
+        settings.measurements.backHips =
+          settings.measurements.hipsCircumference - settings.measurements.frontHips
+        settings.measurements.backHipArc = settings.measurements.backHips / 2
+        settings.measurements.frontHipArc = settings.measurements.frontHips / 2
+      }
+      if (
+        typeof settings.measurements.naturalWaist !== 'undefined' &&
+        typeof settings.measurements.backWaist !== 'undefined'
+      ) {
+        settings.measurements.backWaistArc = settings.measurements.backWaist / 2
+        settings.measurements.frontWaistArc =
+          (settings.measurements.naturalWaist - settings.measurements.backWaist) / 2
+      }
+    }
+  }
+}
 
 // Create design
-const Pattern = new freesewing.Design(config, plugins)
+const Pattern = new freesewing.Design(config, [plugins, pluginMeasurements])
 
 // Attach draft methods to prototype
-Pattern.prototype.draftInterfacingTip = (part) => draftInterfacingTip(part)
-Pattern.prototype.draftInterfacingTail = (part) => draftInterfacingTail(part)
-Pattern.prototype.draftFabricTip = (part) => draftFabricTip(part)
-Pattern.prototype.draftFabricTail = (part) => draftFabricTail(part)
-Pattern.prototype.draftLiningTip = (part) => draftLiningTip(part)
-Pattern.prototype.draftLiningTail = (part) => draftLiningTail(part)
-Pattern.prototype.draftLoop = (part) => draftLoop(part)
+Pattern.prototype.draftBack = (part) => draftBack(part)
 
 export default Pattern
