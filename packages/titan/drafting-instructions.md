@@ -2,6 +2,8 @@
 
 As provided by @dfbean
 
+## Back 
+
 | Action                                                       | # Value      | Draft value (cm) | Code value (mm) | Drafter comments | Programmer comments            |
 | ------------------------------------------------------------ | ------------ | ---------------- | --------------- | ---------------- | ------------------------------ |
 | Make a point, label A                                        |              |                  |                 |                  |                                |
@@ -29,43 +31,14 @@ As provided by @dfbean
 | On line D-I, mark new point # to left of D, label V | 1 | 1 | 9.84 | Fixed point as reference for hip curve. This value was already included in line D-I, so that it could be removed at this stage. | This seems a bit random. I don't see any reference to *1cm* when constructing point I, so not sure where to get this from. See next step for workaround |
 | On line D-I, mark new point # halfway between between V and I, label W | | 19.0 | 191.5 |  I measured/divided manually, you'll let the computer do this. | Went with 51.25% instead (because of the 1cm). Stored in the static `grainlineBackFactor` option |
 | From point W, square up to line A-H (waistline) and down # waist to ankle, to knee and # to ankle to create grainline Mark knee and ankle points | | 100.3, 61.0 | 1053, 610 | Threw this in so I could complete the crotch and hip curves. | We have a `naturalWaistToFloor` measurement. Adding `naturalWaistToAnkle` seems excessive. I'm drafting this block to the floor and will leave it to the designer how long they want things. I guesstimated 105.3cm for the fit model. |
+| At knee point square and center a # line, mark endpoints, no label | (knee circ / 2) + 2.5 | (40.6/2) + 2.5 = 22.8 | 221.2 | Knee and ankle circs are needed to build hip and crotch curves correctly. I used my measurement with 1 inch of ease allocated to the back. I want to fiddle with this and get your comments. | Is it custom to only apply ease to the back? I've added a `kneeEase` options for this combined with that `legBalance` option to control this. Default = 75% (meaning that 75% of ease is applied to the back) |
+| At ankle point, square and center a line, mark endpoints, no label | (ankle entry circ / 2) - 2.5 | (31.8/2) + 2.5 = 18.4 | 173.4 | Same approach as the knee, just to have a point to work with. See above note about revisiting after testing. | I noticed we don't have an `ankleCircumference` measurement, but only `ankleEntry`. I've based it on the latter for now, but this feels a bit contra-intuitive. Added `ankleEase` option for this. |
+| Draw a line from ankle points, through knee points, to line D-I. | | | Creates in/out seams and guide for hip and crotch curves | |
+| Draw curve down from I to inseam, blending curve into seam about midway between knee and line D-I. Ensure first inch of curve down from I is at 90 degree angle to upward curve from I. | | | | | Ignored the 90 degree thing for now. Added `inseamCurve` option to control shape of curve. |
+| Draw curve down from V to outseam, blending curve into seam about midway between knee and line D-I.| | | | | I've added the `outSeamCurveKnee` and `outSeamCurveSeat` options to control this. Set the defaults so that the curve deviates 1cm (9.66mm to be exact) at the D-I line as instructed earlier |
 
 
-Draw curve touching X and g, ending at/near I, blend at g if
-needed.
-Draw slightly curved line from T to O.
-Draw dart legs through side points, up to curved T-O line
-True dart by raising shorter leg and redrawing line to O.
-Draw hip curve from just above C to O
-On line D-I, mark new point # to left of D, label V
-At knee point square and center a # line, mark endpoints, no (knee circ / 2) + 2.5 (40.6/2) + 2.5 =
-label
-22.8 Knee and ankle circs are needed to build hip and
-crotch curves correctly. I used my measurement
-with 1 inch of ease allocated to the back.
-Armstrong offers fixed values for knees that make
-no sense, so I want to fiddle with this and get your
-comments.
-At ankle point, square and center a line, mark endpoints, no (ankle entry circ /
-label
-
-2. - 2.5 Same approach as the knee, just to have a point
-     to work with. See above note about revisiting
-     after testing.
-     (31.8/2) + 2.5
-     =18.4
-     Draw a line from ankle points, through knee points, to line
-     D-I.
-     Creates in/out seams and guide for hip and crotch
-     curves
-     Draw curve down from I to inseam, blending curve into
-     seam about midway between knee and line D-I. Ensure first
-     inch of curve down from I is at 90 degree angle to upward
-     curve from I.
-     Draw curve down from V to outseam, blending curve into
-     seam about midway between knee and line D-I.
-     Correct crotch length by pitching crotch seam up/down at
-     point F
+     Correct crotch length by pitching crotch seam up/down at point F
      back crotch length 45.2 – 40 = 5.2
      – (T-X-g-I) = pitch
      up
