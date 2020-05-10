@@ -16,7 +16,7 @@ As provided by @dfbean
 | Starting at point H, square down through point F, till intersecting with line D-I. Label intersection point G | | | | | |
 | On line G-H, measure # from point G, mark endpoint, label X | .5(crotch depth) | 15.6 | 155.5 | | |
 | On line A-H, measure # from point H, toward point A, mark point, label N | 4.5 | 4.5 | 45.1 | Fixed value, sets reference point for back waist | This doesn't work for us. We can't just put in an arbitrary 4.5cm value. That doesn't scale. So I've added a static option called `backWaistFactor` that is 14.5% of the `crotchDepth` measurement. That way, the slant of the back seam should always be the same. This might need tweaking though. |
-| On line A-H, measure from point N toward point A, # mark endpoint, label O | back waist arc + 2.5 | 22.8 | 227.36 | 2.5 fixed value for dart width. Ok that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | **Note:** I've added the `backWaistDart` option which is 12% of the `backWaistArc` measurement, which gives us 24.36mm |
+| On line A-H, measure from point N toward point A, # mark endpoint, label O | back waist arc + 2.5 | 22.8 | 227.36 | 2.5 fixed value for dart width. Ok that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | I've added the `backWaistDart` option which is 12% of the `backWaistArc` measurement, which gives us 24.36mm |
 | On line A-H, measure from point N # toward O, mark endpoint, label P | .5 (back waist arc + 2.5) | 11.4 | 113.68 | 2.5 fixed value for dart placement. | went with time .56 instead of fixed value |
 | Square line # down from P, mark endpoint, no label | | 8.9 | 88.64 | Fixed value for dart length. See previous note onfixed dart value. | Added the `backWaistDartLength` option, which is based on the `crotchDepth` measurement. 28.5%  by default |
 | Square out # from P on both sides, mark endpoints, no label. |  | 1.0 | 12.5 | 1.0 Fixed value for dart width. See previous note. | Earlier on, draft instructions specify *2.5cm fixed value for dart width*. Now, it's *1cm fixed value for (half of the) dart width*. Rather than an introduce a 0.5cm error, I've kept the dart width at 2.5 cm (12.5mm to each side).|
@@ -36,23 +36,16 @@ As provided by @dfbean
 | Draw a line from ankle points, through knee points, to line D-I. | | | Creates in/out seams and guide for hip and crotch curves | |
 | Draw curve down from I to inseam, blending curve into seam about midway between knee and line D-I. Ensure first inch of curve down from I is at 90 degree angle to upward curve from I. | | | | | Ignored the 90 degree thing for now. Added `inseamCurve` option to control shape of curve. |
 | Draw curve down from V to outseam, blending curve into seam about midway between knee and line D-I.| | | | | I've added the `outSeamCurveKnee` and `outSeamCurveSeat` options to control this. Set the defaults so that the curve deviates 1cm (9.66mm to be exact) at the D-I line as instructed earlier |
+| Correct crotch length by pitching crotch seam up/down at point F. | back crotch length – (T-X-g-I) = pitch up | 45.2 – 40 = 5.2 | Lucky you, the computer will handle this! Negative result means downward pitch | I haven't implemented this yet because I'm not really sure what *pitch up* means. Will ask Deb to clarify |
+     
+
+## Front
+
+| Action                                                       | # Value      | Draft value (cm) | Code value (mm) | Drafter comments | Programmer comments            |
+| ------------------------------------------------------------ | ------------ | ---------------- | --------------- | ---------------- | ------------------------------ |
+| Make a point, label A                                        |              |                  |                 |                  |                                |
 
 
-     Correct crotch length by pitching crotch seam up/down at point F
-     back crotch length 45.2 – 40 = 5.2
-     – (T-X-g-I) = pitch
-     up
-     Lucky you, the computer will handle this! Negative
-     result means downward pitch
-     Page 2Titan Instructions
-     Action
-     Page 3 of 4, Titan
-
-# Value Used Value (cm)
-
-crotch depth 31.1
-Drafter Comments
-Make a point, label A
 Square line down # from A, mark point at end, label D
 On line A-D, measure # from point A, mark new point, label hip depth
 C
