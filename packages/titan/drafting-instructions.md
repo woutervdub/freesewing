@@ -13,32 +13,24 @@ As provided by @dfbean
 | | **OR**, (upperleg + 3.8 + 1.9) – (front hip arc + .3+ front crotch extension) | (64.8 + 3.8 + 1.9) – (25.4 +.3 +5.7) = 39.1 | 393.23 | Includes 3.8 cm recommended crotch ease and 1.9cm placeholder that will be removed later. | used `upperLegEase` and `crotchExtension` options. `crotchExtension` being based on `hipsCircumference` measurement |
 | Starting at point H, square down through point F, till intersecting with line D-I. Label intersection point G | | | | | |
 | On line G-H, measure # from point G, mark endpoint, label X | .5(crotch depth) | 15.6 | 155.5 | | |
-| On line A-H, measure # from point H, toward point A, mark point, label N | 4.5 | 4.5 | 45.1 | Fixed value, sets reference point for back waist | **Note:** This doesn't work for us. We can't just put in an arbitrary 4.5cm value. That doesn't scale. So I've added a static option called `backWaistFactor` that is 14.5% of the `crotchDepth` measurement. That way, the slant of the back seam should always be the same. This might need tweaking though. |
+| On line A-H, measure # from point H, toward point A, mark point, label N | 4.5 | 4.5 | 45.1 | Fixed value, sets reference point for back waist | This doesn't work for us. We can't just put in an arbitrary 4.5cm value. That doesn't scale. So I've added a static option called `backWaistFactor` that is 14.5% of the `crotchDepth` measurement. That way, the slant of the back seam should always be the same. This might need tweaking though. |
 | On line A-H, measure from point N toward point A, # mark endpoint, label O | back waist arc + 2.5 | 22.8 | 227.36 | 2.5 fixed value for dart width. Ok that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | **Note:** I've added the `backWaistDart` option which is 12% of the `backWaistArc` measurement, which gives us 24.36mm |
 | On line A-H, measure from point N # toward O, mark endpoint, label P | .5 (back waist arc + 2.5) | 11.4 | 113.68 | 2.5 fixed value for dart placement. | went with time .56 instead of fixed value |
 | Square line # down from P, mark endpoint, no label | | 8.9 | 88.64 | Fixed value for dart length. See previous note onfixed dart value. | Added the `backWaistDartLength` option, which is based on the `crotchDepth` measurement. 28.5%  by default |
+| Square out # from P on both sides, mark endpoints, no label. |  | 1.0 | 12.5 | 1.0 Fixed value for dart width. See previous note. | Earlier on, draft instructions specify *2.5cm fixed value for dart width*. Now, it's *1cm fixed value for (half of the) dart width*. Rather than an introduce a 0.5cm error, I've kept the dart width at 2.5 cm (12.5mm to each side).|
+| Square up # from point N, mark endpoint, label T | 2.5 | 2.5 | -24.88 | Fixed value for height of back rise. | Once again not loving the fixed 2.5cm value here. But I'm not certain whether it's best to make this a fraction of `crotchDepth` or rather `backWaistArc`. Went with `crotchDepth` since it is a vertical measurement after all. Added the `backRise` option for this. |
+| Draw a line from T, through X, to line D-I, no label | | | -320.67 | | Point name: `extendedBackSeam` |
+| Square # up/left diagonally from G , mark endpoint, label g | 4.4 | 4.4 | 44 | Fixed value as reference for crotch curve. | I'm a bit confused here about the *fixed value* note here. The intersection of the line from `T` through `X` and a line from `G` 45 degrees NW can only intersect in 1 point. It so happens that point is 4.4cm from G, but why is it described as a *fixed value*? |
+| Draw curve touching X and g, ending at/near I, blend at g if needed. | | | | | I had a look at the hand-drawn version, and I do find the bend of this curve to be really sharp. I have approximated it in the code, but I have also added the `backSeamCurveStart` and `backSeamCurveBend` options to control the curvature. |
+| Draw slightly curved line from T to O. | | | | |
+| Draw dart legs through side points, up to curved T-O line | | | | |
+| True dart by raising shorter leg and redrawing line to O. | | | | We don't *true*, we just get it right :) |
+| Draw hip curve from just above C to O | | | | | Just above C? Why just above C as C marks the fullest part of the seat? |
+| On line D-I, mark new point # to left of D, label V | 1 | 1 | 9.84 | Fixed point as reference for hip curve. This value was already included in line D-I, so that it could be removed at this stage. | This seems a bit random. I don't see any reference to *1cm* when constructing point I, so not sure where to get this from. See next step for workaround |
+| On line D-I, mark new point # halfway between between V and I, label W | | 19.0 | 191.5 |  I measured/divided manually, you'll let the computer do this. | Went with 51.25% instead (because of the 1cm). Stored in the static `grainlineBackFactor` option |
+| From point W, square up to line A-H (waistline) and down # waist to ankle, to knee and # to ankle to create grainline Mark knee and ankle points | | 100.3, 61.0 | 1053, 610 | Threw this in so I could complete the crotch and hip curves. | We have a `naturalWaistToFloor` measurement. Adding `naturalWaistToAnkle` seems excessive. I'm drafting this block to the floor and will leave it to the designer how long they want things. I guesstimated 105.3cm for the fit model. |
 
 
-Square out # from P on both sides, mark endpoints, no
-label. 1.0 1.0 Fixed value for dart width. See previous note.
-Square up # from point N, mark endpoint, label T 2.5 2.5 Fixed value for height of back rise.
-Page 1
-Programmer CommentsTitan Instructions
-Page 2 of 4, Titan
-Draw a line from T, through X, to line D-I, no label
-Square # up/left diagonally from G , mark endpoint, label g
-4.4 4.4 Fixed value as reference for crotch curve.
-1.0 1.0 Fixed point as reference for hip curve. This value
-was already included in line D-I, so that it could be
-removed at this stage.
-On line D-I, mark new point # halfway between between V
-and I, label W 19.0 I measured/divided manually, you'll let the
-computer do this.
-From point W, square up to line A-H (waistline) and down # waist to ankle,
-to knee and # to ankle to create grainline Mark knee and
-waist to knee
-ankle points 100.3, 61.0 Threw this in so I could complete the crotch and
-hip curves.
 Draw curve touching X and g, ending at/near I, blend at g if
 needed.
 Draw slightly curved line from T to O.
