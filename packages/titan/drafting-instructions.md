@@ -36,7 +36,7 @@ As provided by @dfbean
 | Draw a line from ankle points, through knee points, to line D-I. | | | Creates in/out seams and guide for hip and crotch curves | |
 | Draw curve down from I to inseam, blending curve into seam about midway between knee and line D-I. Ensure first inch of curve down from I is at 90 degree angle to upward curve from I. | | | | | Ignored the 90 degree thing for now. Added `inseamCurve` option to control shape of curve. |
 | Draw curve down from V to outseam, blending curve into seam about midway between knee and line D-I.| | | | | I've added the `outSeamCurveKnee` and `outSeamCurveSeat` options to control this. Set the defaults so that the curve deviates 1cm (9.66mm to be exact) at the D-I line as instructed earlier |
-| Correct crotch length by pitching crotch seam up/down at point F. | back crotch length – (T-X-g-I) = pitch up | 45.2 – 40 = 5.2 | Lucky you, the computer will handle this! Negative result means downward pitch | I haven't implemented this yet because I'm not really sure what *pitch up* means. Will ask Deb to clarify |
+| Correct crotch length by pitching crotch seam up/down at point F. | back crotch length – (T-X-g-I) = pitch up | 45.2 – 40 = 5.2 | | Lucky you, the computer will handle this! Negative result means downward pitch | I haven't implemented this yet because I'm not really sure what *pitch up* means. Will ask Deb to clarify |
      
 
 ## Front
