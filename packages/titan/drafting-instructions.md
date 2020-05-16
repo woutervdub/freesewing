@@ -44,24 +44,14 @@ As provided by @dfbean
 | Action                                                       | # Value      | Draft value (cm) | Code value (mm) | Drafter comments | Programmer comments            |
 | ------------------------------------------------------------ | ------------ | ---------------- | --------------- | ---------------- | ------------------------------ |
 | Make a point, label A                                        |              |                  |                 |                  |                                |
+| Square line down # from A, mark point at end, label D        | crotch depth | 31.1             | 311             |                  | used `crotchDepth` measurement |
+| On line A-D, measure # from point A, mark new point, label C | hip depth    | 22.9             | 229                | | used `naturalWaistToSeat` measurement |
+| From point A, square a line # right mark endpoint, label L | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3cm for ease | used `hipsEase` option, `frontHipArc` measurement provided by the `measurements` plugin (part of titan for now) |
+| From point C, square a line # right, mark endpoint, label J | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 |.3cm for ease | |
+| From point D, square a line # right, mark endpoint, label K | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3 cm for ease | |
+| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) 
 
 
-Square line down # from A, mark point at end, label D
-On line A-D, measure # from point A, mark new point, label hip depth
-C
-22.9
-From point A, square a line # right mark endpoint, label L front hip arc + .3cm 25.4 + .3 = 25.7 .3cm for ease
-From point C, square a line # right, mark endpoint, label J front hip arc + .3cm 25.4 + .3 = 25.7 .3cm for ease
-From point D, square a line # right, mark endpoint, label K front hip arc + .3cm 25.4 + .3 = 25.7 .3 cm for ease
-Extend line D-K # to the right, label endpoint M crotch extension Front crotch extension values are hips <94.0
-=4.8, hips 94.1-106.4 = 5.1, hips >106.5 = 5.7.
-5.7
-These
-values are supplied by Armstrong. They're
-probably fine but the drafting instructions only go
-to American size 18 (hips 111) and I'm not sure
-how they'll work for larger folks. Should try to test
-this so there's no surprises.
 Connect L to K touching J
 On line L-K, measure # from point from K, mark endpoint,
 label X .5(crotch depth) +
