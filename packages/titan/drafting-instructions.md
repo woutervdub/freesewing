@@ -56,13 +56,11 @@ As provided by @dfbean
 | On line A-L, measure # from point Q toward point A, mark endpoint, label R | front waist arc + 1.9 | 20.3 + 1.9 = 22.2 | 19.05 | 1.9 fixed value for dart width. OK that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | Added the `frontWaistDart` option which defaults to `7.5%` |
 | On line A-L, measure # from point Q toward R, mark endpoint, label S |8.3 | 8.3 | 81.9 | fixed value for dart placement. See previous note on fixed dart value | Went with `frontWaistDartLocation` option which is be default `30%` from `Q` towards `R` |
 | Square line # down from S, mark endpoint, no label | 6.4 | 6.4 | 64.38 |  Fixed value for dart length. See previous note on fixed dart value. | Went with `frontWaistDartLenght` option, which defaults to `45%` (based on distance down to `X`) |
+| Square out # from S on both sides, mark endpoints, no label. | .6 | .6 | 6.35 | Fixed value for dart width. See previous note. | Earlier, you used `1.9` as a fixed value for dart with. Now, half the dart width is `0.6` 7mm went missing somewhere and I can't see what happened to them. So, I aimed for `12.7mm` dart width and am thus not respecting the `19mm` above |
+| Square up # from point Q, mark endpoint, label U | .6 | .6 | 6.35 | Fixed value for waistband reference | Created `frontWaistRise` options for this, defaults to `2.5%` (of `frontWaistArc` measurement) |
+| Draw a line from U, through X, to line D-K-M, no label | | | | |
 
-
-Square out # from S on both sides, mark endpoints, no
-label. .6 .6 Fixed value for dart width. See previous note.
-Square up # from point Q, mark endpoint, label U .6 .6 Fixed value for waistband reference
-Draw a line from U, through X, to line D-K-M, no label
-Square # up/right diagonally from K , mark endpoint, label k 3.2
+ Square # up/right diagonally from K , mark endpoint, label k  3.2 
 Fixed value, sets reference point for front waist.
 Reference for crotch curve
 3.2
