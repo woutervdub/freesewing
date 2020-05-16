@@ -26,6 +26,13 @@ const pluginMeasurements = {
         settings.measurements.frontWaistArc =
           (settings.measurements.naturalWaist - settings.measurements.backWaist) / 2
       }
+      if (
+        typeof settings.measurements.crossSeam !== 'undefined' &&
+        typeof settings.measurements.frontCrossSeam !== 'undefined'
+      ) {
+        settings.measurements.backCrossSeam =
+          settings.measurements.crossSeam - settings.measurements.frontCrossSeam
+      }
     }
   }
 }

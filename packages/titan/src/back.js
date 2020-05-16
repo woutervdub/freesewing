@@ -58,13 +58,13 @@ export default (part) => {
     points.X
   )
   points.f = utils.beamsIntersect(points.C, points.F, points.T, points.X)
-  points.backSeamCurveStart = points.f.shiftFractionTowards(
+  points.crossSeamCurveStart = points.f.shiftFractionTowards(
     points.extendedBackSeam,
-    options.backSeamCurveStart
+    options.crossSeamCurveStart
   )
-  points.backSeamCurveCp = points.backSeamCurveStart.shiftFractionTowards(
+  points.crossSeamCurveCp = points.crossSeamCurveStart.shiftFractionTowards(
     points.extendedBackSeam,
-    options.backSeamCurveBend
+    options.crossSeamCurveBend
   )
 
   // To insert a dart into a curve, we need to split the curve in two halves
@@ -116,14 +116,6 @@ export default (part) => {
   points.floorOut = points.floor.shift(0, measurements.ankleEntry / 4 + ankleEase)
   points.floorIn = points.floorOut.flipX(points.floor)
 
-  console.log(
-    new Path()
-      .move(points.T)
-      .line(points.backSeamCurveStart)
-      .curve_(points.backSeamCurveCp, points.I)
-      .length()
-  )
-
   points.kneeInCp1 = points.floorIn.shiftFractionTowards(points.kneeIn, 1 + options.inseamCurve)
   points.kneeOutCp2 = points.floorOut.shiftFractionTowards(
     points.kneeOut,
@@ -131,10 +123,12 @@ export default (part) => {
   )
   points.CCp1 = points.A.shiftFractionTowards(points.C, 1 + options.outseamCurveSeat)
 
-  paths.seam = new Path()
+  // Path prior to fitting the cross seam
+  /*
+  paths.origSeam = new Path()
     .move(points.T)
-    .line(points.backSeamCurveStart)
-    .curve_(points.backSeamCurveCp, points.I)
+    .line(points.crossSeamCurveStart)
+    .curve_(points.crossSeamCurveCp, points.I)
     ._curve(points.kneeInCp1, points.kneeIn)
     .line(points.floorIn)
     .line(points.floorOut)
@@ -145,6 +139,92 @@ export default (part) => {
     .line(points.dartTip)
     .line(points.dart2)
     .curve_(points.dart2Cp2, points.T)
+    .attr('class', 'fabric')
+  */
+
+  // Should we fit the cross seam?
+  if (options.fitCrossSeam && options.fitBackCrossSeam) {
+    // Helper method to calculate the actual length of the cross seam
+    const crossSeamDelta = () => {
+      let len = new Path()
+        .move(points.T)
+        .line(points.crossSeamCurveStart)
+        .curve_(points.crossSeamCurveCp, points.I)
+        .length()
+      return len - measurements.backCrossSeam
+    }
+    // Clone some points
+    points.fPreSpread = points.f.clone()
+    points.fPostSpread = points.f.clone()
+    points.CPreShift = points.C.clone()
+    // Points involved in the slash and rotate
+    let rotate = [
+      'fPostSpread',
+      'T',
+      'midDart',
+      'dart1',
+      'dart2',
+      'dartTip',
+      'dart2Cp2',
+      'dart1Cp1',
+      'OCp2',
+      'O',
+      'CCp1',
+      'CCp2'
+    ]
+    // Get to work
+    let delta = crossSeamDelta()
+    let run = 0
+    do {
+      run++
+      for (const i of rotate)
+        points[i] = points[i].rotate((delta / 5) * options.crossSeamFitBalance, points.C)
+      points.I = points.I.shift(0, (delta / 2.5) * (1 - options.crossSeamFitBalance))
+      points.extendedBackSeam = utils.beamsIntersect(
+        points.I,
+        points.D,
+        points.T,
+        points.crossSeamCurveStart
+      )
+      points.f = utils.beamsIntersect(points.C, points.F, points.T, points.crossSeamCurveStart)
+      points.crossSeamCurveStart = points.f.shiftFractionTowards(
+        points.extendedBackSeam,
+        options.crossSeamCurveStart
+      )
+      points.crossSeamCurveCp = points.crossSeamCurveStart.shiftFractionTowards(
+        points.extendedBackSeam,
+        options.crossSeamCurveBend
+      )
+      delta = crossSeamDelta()
+    } while (Math.abs(delta) > 0.5 && run < 50)
+    // Now assure the horizontal width is respected
+    let angle = points.C.angle(points.fPostSpread)
+    points.tmp = utils.beamsIntersect(
+      points.C,
+      points.fPostSpread,
+      points.T,
+      points.crossSeamCurveStart
+    )
+    let distance = points.fPostSpread.dist(points.tmp)
+    console.log({ distance, angle })
+    for (const i of ['C', 'CCp1', 'CCp2']) points[i] = points[i].shift(angle - 180, distance)
+  }
+
+  paths.seam = new Path()
+    .move(points.T)
+    .line(points.crossSeamCurveStart)
+    .curve_(points.crossSeamCurveCp, points.I)
+    ._curve(points.kneeInCp1, points.kneeIn)
+    .line(points.floorIn)
+    .line(points.floorOut)
+    .line(points.kneeOut)
+    .curve(points.kneeOutCp2, points.CCp1, points.C)
+    .curve_(points.CCp2, points.O)
+    .curve(points.OCp2, points.dart1Cp1, points.dart1)
+    .line(points.dartTip)
+    .line(points.dart2)
+    .curve_(points.dart2Cp2, points.T)
+    .attr('class', 'fabric')
 
   if (complete) {
     macro('grainline', {
