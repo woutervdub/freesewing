@@ -49,7 +49,7 @@ As provided by @dfbean
 | From point A, square a line # right mark endpoint, label L | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3cm for ease | used `hipsEase` option, `frontHipArc` measurement provided by the `measurements` plugin (part of titan for now) |
 | From point C, square a line # right, mark endpoint, label J | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 |.3cm for ease | |
 | From point D, square a line # right, mark endpoint, label K | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3 cm for ease | |
-| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) |
+| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) as basis but applied a `7%` extra stored in fixed option `crotchFrontExtention` |
 | Connect L to K touching J | | | | | |
 | On line L-K, measure # from point from K, mark endpoint, label X | .5(crotch depth) + 1.3 | 15.5 + 1.3 = 16.8 | 18.8 | | Went with `54%` of `crotchDepth` instead. Created a new option for this: `flySlopeHinge`, fixed to `0.54` |
 | On line A-L, measure # from point L, mark point, label Q | 1.3 | 1.3 | 12.88  | | Based this on the vertical distance between X and L, this should keep the slop consistent across sizes. Created new option for this: `flySlopeFactor`, fixed to  `0.09` |
@@ -59,14 +59,10 @@ As provided by @dfbean
 | Square out # from S on both sides, mark endpoints, no label. | .6 | .6 | 6.35 | Fixed value for dart width. See previous note. | Earlier, you used `1.9` as a fixed value for dart with. Now, half the dart width is `0.6` 7mm went missing somewhere and I can't see what happened to them. So, I aimed for `12.7mm` dart width and am thus not respecting the `19mm` above |
 | Square up # from point Q, mark endpoint, label U | .6 | .6 | 6.35 | Fixed value for waistband reference | Created `frontWaistRise` options for this, defaults to `2.5%` (of `frontWaistArc` measurement) |
 | Draw a line from U, through X, to line D-K-M, no label | | | | |
+| Square # up/right diagonally from K , mark endpoint, label k | 3.2 | 3.2 | | Fixed value as reference for crotch curve. | Didn't bother with this, as it's not a point we'll use in construction, but merely an indicator where our curve should be. |
+| Draw curve touching X, k and M, blend at k if needed. | | | | | Similar options as the back: `flyCurveStart` and `flyCurveBend` |
+| Draw slightly curved line from U to R | | | | | If there's a curve in your drawing, it's too subtle to see. So I just used a straight line as that makes handling the dart so so much easier |
 
- Square # up/right diagonally from K , mark endpoint, label k  3.2 
-Fixed value, sets reference point for front waist.
-Reference for crotch curve
-3.2
-Fixed value as reference for crotch curve.
-Draw curve touching X, k and M, blend at k if needed.
-Draw slightly curved line from U to R
 Draw dart legs through side points, up to curved U-R line
 Page 3
 Programmer commentsTitan Instructions
