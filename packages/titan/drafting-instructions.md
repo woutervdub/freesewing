@@ -49,22 +49,15 @@ As provided by @dfbean
 | From point A, square a line # right mark endpoint, label L | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3cm for ease | used `hipsEase` option, `frontHipArc` measurement provided by the `measurements` plugin (part of titan for now) |
 | From point C, square a line # right, mark endpoint, label J | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 |.3cm for ease | |
 | From point D, square a line # right, mark endpoint, label K | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3 cm for ease | |
-| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) 
+| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) |
+| Connect L to K touching J | | | | | |
+| On line L-K, measure # from point from K, mark endpoint, label X | .5(crotch depth) + 1.3 | 15.5 + 1.3 = 16.8 | 18.8 | | Went with `54%` of `crotchDepth` instead. Created a new option for this: `flySlopeHinge`, fixed to `0.54` |
+| On line A-L, measure # from point L, mark point, label Q | 1.3 | 1.3 | 12.88  | | Based this on the vertical distance between X and L, this should keep the slop consistent across sizes. Created new option for this: `flySlopeFactor`, fixed to  `0.09` |
+| On line A-L, measure # from point Q toward point A, mark endpoint, label R | front waist arc + 1.9 | 20.3 + 1.9 = 22.2 | 19.05 | 1.9 fixed value for dart width. OK that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | Added the `frontWaistDart` option which defaults to `7.5%` |
+| On line A-L, measure # from point Q toward R, mark endpoint, label S |8.3 | 8.3 | 81.9 | fixed value for dart placement. See previous note on fixed dart value | Went with `frontWaistDartLocation` option which is be default `30%` from `Q` towards `R` |
+| Square line # down from S, mark endpoint, no label | 6.4 | 6.4 | 64.38 |  Fixed value for dart length. See previous note on fixed dart value. | Went with `frontWaistDartLenght` option, which defaults to `45%` (based on distance down to `X`) |
 
 
-Connect L to K touching J
-On line L-K, measure # from point from K, mark endpoint,
-label X .5(crotch depth) +
-1.3 15.5 + 1.3 = 16.8 On line A-L, measure # from point L, mark point, label Q 1.3 1.3 On line A-L, measure # from point Q toward point A, mark
-endpoint, label R front waist arc + 1.9 20.3 + 1.9 = 22.2 1.9 fixed value for dart width. OK that it's fixed,
-it's mostly a placeholder and gets removed, rolled
-or replaced in pant patterns. If additional shaping
-is required it can be placed in hip curve.
-On line A-L, measure # from point Q toward R, mark
-endpoint, label S 8.3 8.3 fixed value for dart placement. See previous not
-on fixed dart value
-Square line # down from S, mark endpoint, no label 6.4 6.4 Fixed value for dart length. See previous note on
-fixed dart value.
 Square out # from S on both sides, mark endpoints, no
 label. .6 .6 Fixed value for dart width. See previous note.
 Square up # from point Q, mark endpoint, label U .6 .6 Fixed value for waistband reference
