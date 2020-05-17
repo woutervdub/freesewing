@@ -69,24 +69,10 @@ As provided by @dfbean
 | On line D-M, mark new point halfway between between Y and M, label Z | | 15.2 | 153 |Value only for reference, you use that new-fangled computer to generate this. | Why did we go through all that trouble figuring out where to put the dart, when we now determine this is the grainline, which is probably where the dart should be anyway? |
 | From point Z, square up to line A-L (waistline) and down # to waist to ankle, knee and # to ankle to create grainline Mark knee and ankle waist to knee points | | 100.3 | | | | We have a `naturalWaistToFloor` measurement. Adding `naturalWaistToAnkle` seems excessive. I'm drafting this block to the floor and will leave it to the designer how long they want things. I guesstimated 105.3cm for the fit model. |
 | At knee point square and center a # line, mark endpoints, no label | knee circ / 2 | 40.6/2 = 20.3 | 209.1 | Threw this in so I could complete the crotch and hip curves. Knee and ankle circ”s are needed to build hip and crotch curves correctly. I used my measurements with 1 inch of ease at knee, allocated to the back. I want to fiddle with this and get your comments.| I used the `kneeEase` and `legBalance` options for this (same as in the back). Hence slightly different value |
+| At ankle point, square and center a line, mark endpoints, no label | ankle entry circ / 2 | 31.8/2 = 15.9 | `163.76` because we added `ankleEase` | Same approach as the knee, just to have a point to work with. See above note about revisiting after testing. | Note that we're drafting to the floor |
+| Draw a line from ankle points, through knee points, to line D-M Creates in/out seams and guide for hip and crotch curves | | | | | |
+| Draw curve down from M to inseam, blending curve into seam about midway between knee and line D-M. Ensure first inch of curve down from M is at 90 degree angle to upward curve from M. | | | | | |
+| Draw curve down from Y to outseam, blending curve into seam about midway between knee and line D-M.  | | | | | |
+| Correct crotch length by pitching crotch seam up/down at point J | | | | | |
 
-At ankle point, square and center a line, mark endpoints, no ankle entry circ / 2 31.8/2 = 15.9
-label Same approach as the knee, just to have a point
-to work with. See above note about revisiting
-after testing.
-Draw a line from ankle points, through knee points, to line
-D-M Creates in/out seams and guide for hip and crotch
-curves
-Draw curve down from M to inseam, blending curve into
-seam about midway between knee and line D-M. Ensure
-first inch of curve down from M is at 90 degree angle to
-upward curve from M.
-Draw curve down from Y to outseam, blending curve into
-seam about midway between knee and line D-M.
-Correct crotch length by pitching crotch seam up/down at
-point J
-front crotch length 35.6 – 33.7 = 1.9
-– (L-X-k-M) = pitch
-up
-Lucky you, the computer will handle this! Negative
-result means downward pitch
+All implemented. And more. For one thing, there's no trueing of the inseam and outseam here.
