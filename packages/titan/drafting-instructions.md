@@ -61,34 +61,15 @@ As provided by @dfbean
 | Draw a line from U, through X, to line D-K-M, no label | | | | |
 | Square # up/right diagonally from K , mark endpoint, label k | 3.2 | 3.2 | | Fixed value as reference for crotch curve. | Didn't bother with this, as it's not a point we'll use in construction, but merely an indicator where our curve should be. |
 | Draw curve touching X, k and M, blend at k if needed. | | | | | Similar options as the back: `flyCurveStart` and `flyCurveBend` |
-| Draw slightly curved line from U to R | | | | | If there's a curve in your drawing, it's too subtle to see. So I just used a straight line as that makes handling the dart so so much easier |
+| Draw slightly curved line from U to R | | | | | If there's a curve in your drawing, it's too subtle to see. So I just used a straight line as that makes handling the dart so so much easier. On that note, we've already constructed the dart at this point. Now we don't only have to move it, but it's also no longer on a horizontal line, so we have to slightly rotate it. AS such, I'm going to move the construction of the dart further down the code so that we construct it in the right place rather than moving it afterwards. |
+|  Draw dart legs through side points, up to curved U-R line | | | | | | |
+|  True dart by raising shorter leg and redrawing line to R | | | | | No trueing needed, our dart is correct already |
+| Draw hip curve from just above C to R | | | | | Same remark as for the back: Why just above C as C marks the fullest part of the seat? |
+| On line D-M, mark new point # to right of D, label Y | 1.0 | 1.0 |  | Fixed point as reference for hip curve. This value was already included in line D-I, so that it could be removed at this stage. | This is one of those control points not actuall used in construction. Will just use `52%` of the horizontal distance instead, stored in the `frontGrainLineFactor` option |
+| On line D-M, mark new point halfway between between Y and M, label Z | | 15.2 | 153 |Value only for reference, you use that new-fangled computer to generate this. | Why did we go through all that trouble figuring out where to put the dart, when we now determine this is the grainline, which is probably where the dart should be anyway? |
+| From point Z, square up to line A-L (waistline) and down # to waist to ankle, knee and # to ankle to create grainline Mark knee and ankle waist to knee points | | 100.3 | | | | We have a `naturalWaistToFloor` measurement. Adding `naturalWaistToAnkle` seems excessive. I'm drafting this block to the floor and will leave it to the designer how long they want things. I guesstimated 105.3cm for the fit model. |
+| At knee point square and center a # line, mark endpoints, no label | knee circ / 2 | 40.6/2 = 20.3 | 209.1 | Threw this in so I could complete the crotch and hip curves. Knee and ankle circ”s are needed to build hip and crotch curves correctly. I used my measurements with 1 inch of ease at knee, allocated to the back. I want to fiddle with this and get your comments.| I used the `kneeEase` and `legBalance` options for this (same as in the back). Hence slightly different value |
 
-Draw dart legs through side points, up to curved U-R line
-Page 3
-Programmer commentsTitan Instructions
-Page 4 of 4, Titan
-True dart by raising shorter leg and redrawing line to R
-Draw hip curve from just above C to R
-On line D-M, mark new point # to right of D, label Y
-1.0
-1.0 Fixed point as reference for hip curve. This value
-was already included in line D-I, so that it could be
-removed at this stage.
-On line D-M, mark new point halfway between between Y
-and M, label Z 15.2 Value only for reference, you use that new-
-fangled computer to generate this.
-From point Z, square up to line A-L (waistline) and down # to waist to ankle,
-knee and # to ankle to create grainline Mark knee and ankle waist to knee
-points 100.3, At knee point square and center a # line, mark endpoints, no knee circ / 2
-label 40.6/2 = 20.3
-61.0 Threw this in so I could complete the crotch and
-hip curves.
-Knee and ankle circ”s are needed to build hip and
-crotch curves correctly. I used my measurements
-with 1 inch of ease at knee, allocated to the back.
-Armstrong offers fixed values for knees that make
-no sense, so I want to fiddle with this and get your
-comments.
 At ankle point, square and center a line, mark endpoints, no ankle entry circ / 2 31.8/2 = 15.9
 label Same approach as the knee, just to have a point
 to work with. See above note about revisiting
