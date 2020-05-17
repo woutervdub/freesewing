@@ -36,7 +36,7 @@ As provided by @dfbean
 | Draw a line from ankle points, through knee points, to line D-I. | | | Creates in/out seams and guide for hip and crotch curves | |
 | Draw curve down from I to inseam, blending curve into seam about midway between knee and line D-I. Ensure first inch of curve down from I is at 90 degree angle to upward curve from I. | | | | | Ignored the 90 degree thing for now. Added `inseamCurve` option to control shape of curve. |
 | Draw curve down from V to outseam, blending curve into seam about midway between knee and line D-I.| | | | | I've added the `outSeamCurveKnee` and `outSeamCurveSeat` options to control this. Set the defaults so that the curve deviates 1cm (9.66mm to be exact) at the D-I line as instructed earlier |
-| Correct crotch length by pitching crotch seam up/down at point F. | back crotch length – (T-X-g-I) = pitch up | 45.2 – 40 = 5.2 | | Lucky you, the computer will handle this! Negative result means downward pitch | I haven't implemented this yet because I'm not really sure what *pitch up* means. Will ask Deb to clarify |
+| Correct crotch length by pitching crotch seam up/down at point F. | back crotch length – (T-X-g-I) = pitch up | 45.2 – 40 = 5.2 | | Lucky you, the computer will handle this! Negative result means downward pitch | Implemented by slashing horizontally, then rotating, in combination with shifting the tip of the inseam outwards. The balance between these two ways to increase (or decrease) the cross seam is the `crossSeamFitBalance` option which defaults to `0.5`. Once the cross seam is the correct length, we also make sure we respect the horizontal distance from cross seam to side by shifting the side seam outwards. |
      
 
 ## Front
@@ -49,76 +49,30 @@ As provided by @dfbean
 | From point A, square a line # right mark endpoint, label L | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3cm for ease | used `hipsEase` option, `frontHipArc` measurement provided by the `measurements` plugin (part of titan for now) |
 | From point C, square a line # right, mark endpoint, label J | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 |.3cm for ease | |
 | From point D, square a line # right, mark endpoint, label K | front hip arc + .3cm | 25.4 + .3 = 25.7 | 256.54 | .3 cm for ease | |
-| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) 
+| Extend line D-K # to the right, label endpoint M | crotch extension |  |  |  | Used `crotchExtension` option (same as back) as basis but applied a `7%` extra stored in fixed option `crotchFrontExtention` |
+| Connect L to K touching J | | | | | |
+| On line L-K, measure # from point from K, mark endpoint, label X | .5(crotch depth) + 1.3 | 15.5 + 1.3 = 16.8 | 18.8 | | Went with `54%` of `crotchDepth` instead. Created a new option for this: `flySlopeHinge`, fixed to `0.54` |
+| On line A-L, measure # from point L, mark point, label Q | 1.3 | 1.3 | 12.88  | | Based this on the vertical distance between X and L, this should keep the slop consistent across sizes. Created new option for this: `flySlopeFactor`, fixed to  `0.09` |
+| On line A-L, measure # from point Q toward point A, mark endpoint, label R | front waist arc + 1.9 | 20.3 + 1.9 = 22.2 | 19.05 | 1.9 fixed value for dart width. OK that it's fixed, it's mostly a placeholder and gets removed, rolled or replaced in pant patterns. If additional shaping is required it can be placed in hip curve. | Added the `frontWaistDart` option which defaults to `7.5%` |
+| On line A-L, measure # from point Q toward R, mark endpoint, label S |8.3 | 8.3 | 81.9 | fixed value for dart placement. See previous note on fixed dart value | Went with `frontWaistDartLocation` option which is be default `30%` from `Q` towards `R` |
+| Square line # down from S, mark endpoint, no label | 6.4 | 6.4 | 64.38 |  Fixed value for dart length. See previous note on fixed dart value. | Went with `frontWaistDartLenght` option, which defaults to `45%` (based on distance down to `X`) |
+| Square out # from S on both sides, mark endpoints, no label. | .6 | .6 | 6.35 | Fixed value for dart width. See previous note. | Earlier, you used `1.9` as a fixed value for dart with. Now, half the dart width is `0.6` 7mm went missing somewhere and I can't see what happened to them. So, I aimed for `12.7mm` dart width and am thus not respecting the `19mm` above |
+| Square up # from point Q, mark endpoint, label U | .6 | .6 | 6.35 | Fixed value for waistband reference | Created `frontWaistRise` options for this, defaults to `2.5%` (of `frontWaistArc` measurement) |
+| Draw a line from U, through X, to line D-K-M, no label | | | | |
+| Square # up/right diagonally from K , mark endpoint, label k | 3.2 | 3.2 | | Fixed value as reference for crotch curve. | Didn't bother with this, as it's not a point we'll use in construction, but merely an indicator where our curve should be. |
+| Draw curve touching X, k and M, blend at k if needed. | | | | | Similar options as the back: `flyCurveStart` and `flyCurveBend` |
+| Draw slightly curved line from U to R | | | | | If there's a curve in your drawing, it's too subtle to see. So I just used a straight line as that makes handling the dart so so much easier. On that note, we've already constructed the dart at this point. Now we don't only have to move it, but it's also no longer on a horizontal line, so we have to slightly rotate it. AS such, I'm going to move the construction of the dart further down the code so that we construct it in the right place rather than moving it afterwards. |
+|  Draw dart legs through side points, up to curved U-R line | | | | | | |
+|  True dart by raising shorter leg and redrawing line to R | | | | | No trueing needed, our dart is correct already |
+| Draw hip curve from just above C to R | | | | | Same remark as for the back: Why just above C as C marks the fullest part of the seat? |
+| On line D-M, mark new point # to right of D, label Y | 1.0 | 1.0 |  | Fixed point as reference for hip curve. This value was already included in line D-I, so that it could be removed at this stage. | This is one of those control points not actuall used in construction. Will just use `52%` of the horizontal distance instead, stored in the `frontGrainLineFactor` option |
+| On line D-M, mark new point halfway between between Y and M, label Z | | 15.2 | 153 |Value only for reference, you use that new-fangled computer to generate this. | Why did we go through all that trouble figuring out where to put the dart, when we now determine this is the grainline, which is probably where the dart should be anyway? |
+| From point Z, square up to line A-L (waistline) and down # to waist to ankle, knee and # to ankle to create grainline Mark knee and ankle waist to knee points | | 100.3 | | | | We have a `naturalWaistToFloor` measurement. Adding `naturalWaistToAnkle` seems excessive. I'm drafting this block to the floor and will leave it to the designer how long they want things. I guesstimated 105.3cm for the fit model. |
+| At knee point square and center a # line, mark endpoints, no label | knee circ / 2 | 40.6/2 = 20.3 | 209.1 | Threw this in so I could complete the crotch and hip curves. Knee and ankle circ”s are needed to build hip and crotch curves correctly. I used my measurements with 1 inch of ease at knee, allocated to the back. I want to fiddle with this and get your comments.| I used the `kneeEase` and `legBalance` options for this (same as in the back). Hence slightly different value |
+| At ankle point, square and center a line, mark endpoints, no label | ankle entry circ / 2 | 31.8/2 = 15.9 | `163.76` because we added `ankleEase` | Same approach as the knee, just to have a point to work with. See above note about revisiting after testing. | Note that we're drafting to the floor |
+| Draw a line from ankle points, through knee points, to line D-M Creates in/out seams and guide for hip and crotch curves | | | | | |
+| Draw curve down from M to inseam, blending curve into seam about midway between knee and line D-M. Ensure first inch of curve down from M is at 90 degree angle to upward curve from M. | | | | | |
+| Draw curve down from Y to outseam, blending curve into seam about midway between knee and line D-M.  | | | | | |
+| Correct crotch length by pitching crotch seam up/down at point J | | | | | |
 
-
-Connect L to K touching J
-On line L-K, measure # from point from K, mark endpoint,
-label X .5(crotch depth) +
-1.3 15.5 + 1.3 = 16.8 On line A-L, measure # from point L, mark point, label Q 1.3 1.3 On line A-L, measure # from point Q toward point A, mark
-endpoint, label R front waist arc + 1.9 20.3 + 1.9 = 22.2 1.9 fixed value for dart width. OK that it's fixed,
-it's mostly a placeholder and gets removed, rolled
-or replaced in pant patterns. If additional shaping
-is required it can be placed in hip curve.
-On line A-L, measure # from point Q toward R, mark
-endpoint, label S 8.3 8.3 fixed value for dart placement. See previous not
-on fixed dart value
-Square line # down from S, mark endpoint, no label 6.4 6.4 Fixed value for dart length. See previous note on
-fixed dart value.
-Square out # from S on both sides, mark endpoints, no
-label. .6 .6 Fixed value for dart width. See previous note.
-Square up # from point Q, mark endpoint, label U .6 .6 Fixed value for waistband reference
-Draw a line from U, through X, to line D-K-M, no label
-Square # up/right diagonally from K , mark endpoint, label k 3.2
-Fixed value, sets reference point for front waist.
-Reference for crotch curve
-3.2
-Fixed value as reference for crotch curve.
-Draw curve touching X, k and M, blend at k if needed.
-Draw slightly curved line from U to R
-Draw dart legs through side points, up to curved U-R line
-Page 3
-Programmer commentsTitan Instructions
-Page 4 of 4, Titan
-True dart by raising shorter leg and redrawing line to R
-Draw hip curve from just above C to R
-On line D-M, mark new point # to right of D, label Y
-1.0
-1.0 Fixed point as reference for hip curve. This value
-was already included in line D-I, so that it could be
-removed at this stage.
-On line D-M, mark new point halfway between between Y
-and M, label Z 15.2 Value only for reference, you use that new-
-fangled computer to generate this.
-From point Z, square up to line A-L (waistline) and down # to waist to ankle,
-knee and # to ankle to create grainline Mark knee and ankle waist to knee
-points 100.3, At knee point square and center a # line, mark endpoints, no knee circ / 2
-label 40.6/2 = 20.3
-61.0 Threw this in so I could complete the crotch and
-hip curves.
-Knee and ankle circ”s are needed to build hip and
-crotch curves correctly. I used my measurements
-with 1 inch of ease at knee, allocated to the back.
-Armstrong offers fixed values for knees that make
-no sense, so I want to fiddle with this and get your
-comments.
-At ankle point, square and center a line, mark endpoints, no ankle entry circ / 2 31.8/2 = 15.9
-label Same approach as the knee, just to have a point
-to work with. See above note about revisiting
-after testing.
-Draw a line from ankle points, through knee points, to line
-D-M Creates in/out seams and guide for hip and crotch
-curves
-Draw curve down from M to inseam, blending curve into
-seam about midway between knee and line D-M. Ensure
-first inch of curve down from M is at 90 degree angle to
-upward curve from M.
-Draw curve down from Y to outseam, blending curve into
-seam about midway between knee and line D-M.
-Correct crotch length by pitching crotch seam up/down at
-point J
-front crotch length 35.6 – 33.7 = 1.9
-– (L-X-k-M) = pitch
-up
-Lucky you, the computer will handle this! Negative
-result means downward pitch
+All implemented. And more. For one thing, there's no trueing of the inseam and outseam here.
