@@ -3,6 +3,7 @@ import plugins from '@freesewing/plugin-bundle'
 import config from '../config'
 // Parts
 import draftBack from './back'
+import draftFront from './front'
 
 const pluginMeasurements = {
   name: 'measurements',
@@ -10,13 +11,13 @@ const pluginMeasurements = {
   hooks: {
     preDraft: function ({ settings }) {
       if (
-        typeof settings.measurements.frontHips !== 'undefined' &&
-        typeof settings.measurements.hipsCircumference !== 'undefined'
+        typeof settings.measurements.backSeat !== 'undefined' &&
+        typeof settings.measurements.seatCircumference !== 'undefined'
       ) {
-        settings.measurements.backHips =
-          settings.measurements.hipsCircumference - settings.measurements.frontHips
-        settings.measurements.backHipArc = settings.measurements.backHips / 2
-        settings.measurements.frontHipArc = settings.measurements.frontHips / 2
+        settings.measurements.frontSeat =
+          settings.measurements.seatCircumference - settings.measurements.backSeat
+        settings.measurements.backSeatArc = settings.measurements.backSeat / 2
+        settings.measurements.frontSeatArc = settings.measurements.frontSeat / 2
       }
       if (
         typeof settings.measurements.naturalWaist !== 'undefined' &&
@@ -42,5 +43,6 @@ const Pattern = new freesewing.Design(config, [plugins, pluginMeasurements])
 
 // Attach draft methods to prototype
 Pattern.prototype.draftBack = (part) => draftBack(part)
+Pattern.prototype.draftFront = (part) => draftFront(part)
 
 export default Pattern

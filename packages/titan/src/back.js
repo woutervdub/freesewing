@@ -19,17 +19,17 @@ export default (part) => {
   points.D = new Point(0, measurements.crotchDepth)
   points.C = new Point(0, measurements.naturalWaistToSeat)
 
-  points.H = new Point(-1 * measurements.backHipArc * (1 + options.hipsEase), 0)
+  points.H = new Point(-1 * measurements.backSeatArc * (1 + options.seatEase), 0)
   points.F = new Point(points.H.x, points.C.y)
 
   // For the widest point of our trouser block, we'll use whichever is widest:
-  // A: 1.25 times the (backHipArc + ease)
-  // B: (upperLegCircumference + ease) - ((frontHipArc + ease) * (1 + crotchExtension))
-  let crotchWidthOptionA = measurements.backHipArc * (1 + options.hipsEase) * 1.25
+  // A: 1.25 times the (backSeatArc + ease)
+  // B: (upperLegCircumference + ease) - ((frontSeatArc + ease) * (1 + crotchExtension))
+  let crotchWidthOptionA = measurements.backSeatArc * (1 + options.seatEase) * 1.25
   let crotchWidthOptionB =
     measurements.upperLegCircumference * (1 + options.upperLegEase) -
-    measurements.frontHipArc * (1 + options.hipsEase) -
-    measurements.hipsCircumference * options.crotchExtension
+    measurements.frontSeatArc * (1 + options.seatEase) -
+    measurements.seatCircumference * options.crotchExtension
 
   points.I = new Point(
     crotchWidthOptionA > crotchWidthOptionB ? crotchWidthOptionA : crotchWidthOptionB * -1,
@@ -72,7 +72,6 @@ export default (part) => {
   // up with with a closed dart, then shift the control points by half a dart.
   let dartWidth = points.theoreticDart1.dx(points.theoreticDart2) / 2
   let closedDartCurveEndpoint = points.T.shift(0, dartWidth)
-
   // Insert dart into waist seamline
   points.midDart = utils.curveIntersectsX(
     points.O,
@@ -206,9 +205,23 @@ export default (part) => {
       points.crossSeamCurveStart
     )
     let distance = points.fPostSpread.dist(points.tmp)
-    console.log({ distance, angle })
     for (const i of ['C', 'CCp1', 'CCp2']) points[i] = points[i].shift(angle - 180, distance)
   }
+
+  // Store inseam & outseam length
+  store.set(
+    'inseamBack',
+    new Path().move(points.I)._curve(points.kneeInCp1, points.kneeIn).line(points.floorIn).length()
+  )
+  store.set(
+    'outseamBack',
+    new Path()
+      .move(points.O)
+      ._curve(points.CCp2, points.C)
+      .curve(points.CCp1, points.kneeOutCp2, points.kneeOut)
+      .line(points.floorOut)
+      .length()
+  )
 
   paths.seam = new Path()
     .move(points.T)

@@ -10,7 +10,21 @@ export default {
   difficulty: 3,
   tags: ['bottom', 'basics'],
   optionGroups: {
-    style: []
+    fit: ['seatEase', 'upperLegEase', 'backRise', 'kneeEase', 'ankleEase', 'frontWaistRise'],
+    advanced: [
+      'crotchExtension',
+      'backWaistDart',
+      'backWaistDartLength',
+      'crossSeamCurveStart',
+      'crossSeamCurveBend',
+      'legBalance',
+      'inseamCurve',
+      'outseamCurveKnee',
+      'outseamCurveSeat',
+      'frontWaistDart',
+      'frontWaistDartLength',
+      'flyCurveBend'
+    ]
   },
   measurements: [
     'ankleEntry',
@@ -18,8 +32,8 @@ export default {
     'crotchDepth',
     'crossSeam',
     'frontCrossSeam',
-    'frontHips',
-    'hipsCircumference',
+    'backSeat',
+    'seatCircumference',
     'kneeCircumference',
     'naturalWaist',
     'naturalWaistToFloor',
@@ -27,7 +41,7 @@ export default {
     'naturalWaistToSeat',
     'upperLegCircumference'
   ],
-  parts: ['back'],
+  parts: ['back', 'front'],
   options: {
     backWaistFactor: 0.145,
     grainlineBackFactor: 0.5125,
@@ -35,19 +49,28 @@ export default {
     fitCrossSeam: true,
     fitFrontCrossSeam: true,
     fitBackCrossSeam: true,
-    hipsEase: { pct: 1, min: 0, max: 2 },
+    flySlopeHinge: 0.54,
+    flySlopeFactor: 0.09,
+    frontGrainLineFactor: 0.52,
+    frontCrotchExtension: 1.07, // 7% longer at the front
+    flyCurveStart: 0.25,
+    seatEase: { pct: 1, min: 0, max: 5 },
     upperLegEase: { pct: 8.5, min: 5, max: 12 },
     crotchExtension: { pct: 5, min: 3, max: 7 },
-    backWaistDart: { pct: 12, min: 10, max: 14 },
-    backWaistDartLength: { pct: 28.5, min: 25, max: 32 },
-    backRise: { pct: 8, min: 5, max: 11 },
-    crossSeamCurveStart: { pct: 25, min: 25, max: 75 },
-    crossSeamCurveBend: { pct: 65, min: 25, max: 75 },
-    kneeEase: { pct: 6, min: 3, max: 9 },
-    ankleEase: { pct: 6, min: 3, max: 9 },
+    backWaistDart: { pct: 12, min: 5, max: 20 },
+    backWaistDartLength: { pct: 28.5, min: 15, max: 45 },
+    backRise: { pct: 8, min: 3, max: 13 },
+    crossSeamCurveStart: { pct: 25, min: 0, max: 45 },
+    crossSeamCurveBend: { pct: 65, min: 45, max: 95 },
+    kneeEase: { pct: 6, min: 1, max: 25 },
+    ankleEase: { pct: 6, min: 1, max: 25 },
     legBalance: { pct: 75, min: 25, max: 100 },
     inseamCurve: { pct: 35, min: 20, max: 50 },
     outseamCurveKnee: { pct: 35, min: 20, max: 50 },
-    outseamCurveSeat: { pct: 60, min: 40, max: 80 }
+    outseamCurveSeat: { pct: 60, min: 40, max: 80 },
+    frontWaistDart: { pct: 5, min: 3, max: 20 },
+    frontWaistDartLength: { pct: 45, min: 25, max: 65 },
+    frontWaistRise: { pct: 2.5, min: 0, max: 10 },
+    flyCurveBend: { pct: 88, min: 70, max: 100 }
   }
 }
