@@ -7,7 +7,7 @@ export default {
   version,
   design: "WouterVdub",
   code: "WouterVdub",
-  department: "menswear",
+  department: "unisex",
   type: "pattern",
   difficulty: 3,
   tags: [
@@ -22,14 +22,24 @@ export default {
     "sewing pattern"
   ],
   optionGroups: {
-    fit: ["size"]
+    fit: ["backOpening"],
+    style: ["lengthBonus", "bibLength"]
   },
-  measurements: [],
+  measurements: [
+    "chestCircumference",
+    "waistCircumference",
+    "hipsCircumference",
+    "hpsToWaistFront",
+    "waistToKnee"
+  ],
   dependencies: {},
   inject: {},
   hide: [],
-  parts: ["box"],
+  parts: ["front"],
   options: {
-    size: { pct: 50, min: 10, max: 100 }
+    backOpening: { pct: 10, min: 0, max: 25 },
+    lengthBonus: { pct: 0, min: -20, max: 25 },
+    bibLength: { pct: 75, min: 0, max: 90 },
+    
   }
 };

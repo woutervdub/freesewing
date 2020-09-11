@@ -1,6 +1,7 @@
 export default function(part) {
   let {
     options,
+    measurements,
     Point,
     Path,
     points,
@@ -13,23 +14,33 @@ export default function(part) {
     macro
   } = part.shorthand()
 
-  let w = 500 * options.size
+  let chestWidth = measurements.chestCircumference /4;
+
+  let apronLength = (measurements.hpsToWaistFront *options.bibLength) +measurements.waistToKnee *(1 + options.lengthBonus);;
+  let apronWidth = Math.max( measurements.hipsCircumference, measurements.waistCircumference) *(1 - options.backOpening);
+  
+
   points.topLeft = new Point(0, 0)
-  points.topRight = new Point(w, 0)
-  points.bottomLeft = new Point(0, w / 2)
-  points.bottomRight = new Point(w, w / 2)
+  points.topRight = new Point(chestWidth /2, 0)
+  points.bottomLeft = new Point(0, apronLength )
+  points.bottomRight = new Point(apronWidth /2, apronLength)
+  points.topRightBack = new Point(apronWidth /2, (measurements.hpsToWaistFront *options.bibLength))
+  points.topRightBackCPfront = points.topRightBack.shift(180,((apronWidth-chestWidth)/2)/2);
+  points.topRightCPdown = points.topRight.shift(270,(measurements.hpsToWaistFront *options.bibLength)/4) ;
 
   paths.seam = new Path()
     .move(points.topLeft)
     .line(points.bottomLeft)
     .line(points.bottomRight)
-    .line(points.topRight)
+    .line(points.topRightBack)
+    .curve(points.topRightBackCPfront, points.topRightCPdown,points.topRight)
     .line(points.topLeft)
     .close()
     .attr('class', 'fabric')
 
   // Complete?
   if (complete) {
+    /*
     points.logo = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
     snippets.logo = new Snippet('logo', points.logo)
     points.text = points.logo
@@ -40,6 +51,7 @@ export default function(part) {
     if (sa) {
       paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
     }
+    */
   }
 
   // Paperless?
