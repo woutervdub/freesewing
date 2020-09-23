@@ -18,15 +18,19 @@ export default function(part) {
 
   let apronLength = (measurements.hpsToWaistFront *options.bibLength) +measurements.waistToKnee *(1 + options.lengthBonus);;
   let apronWidth = Math.max( measurements.hipsCircumference, measurements.waistCircumference) *(1 - options.backOpening);
-  
+  let strapWidth = options.strapWidth *sa;
 
   points.topLeft = new Point(0, 0)
   points.topRight = new Point(chestWidth /2, 0)
   points.bottomLeft = new Point(0, apronLength )
   points.bottomRight = new Point(apronWidth /2, apronLength)
   points.topRightBack = new Point(apronWidth /2, (measurements.hpsToWaistFront *options.bibLength))
-  points.topRightBackCPfront = points.topRightBack.shift(180,((apronWidth-chestWidth)/2)/2);
+  points.topRightBackCPfront = points.topRightBack.shift(180,((apronWidth-chestWidth)/2)/1.5);
   points.topRightCPdown = points.topRight.shift(270,(measurements.hpsToWaistFront *options.bibLength)/4) ;
+
+  console.log('bibLength ' +(measurements.hpsToWaistFront *options.bibLength) )
+  console.log('hpsToWaistFront ' +measurements.hpsToWaistFront )
+  console.log('hpsToWaistBack ' +measurements.hpsToWaistBack )
 
   paths.seam = new Path()
     .move(points.topLeft)
@@ -61,10 +65,25 @@ export default function(part) {
       to: points.bottomRight,
       y: points.bottomLeft.y + sa + 15
     })
+    macro('hd', {
+      from: points.topLeft,
+      to: points.topRight,
+      y: points.topLeft.y - sa - 15
+    })
+    macro('vd', {
+      from: points.bottomLeft,
+      to: points.topLeft,
+      x: points.topLeft.x - sa - 15
+    })
     macro('vd', {
       from: points.bottomRight,
+      to: points.topRightBack,
+      x: points.topRightBack.x + sa + 15
+    })
+    macro('vd', {
+      from: points.topRightBack,
       to: points.topRight,
-      x: points.topRight.x + sa + 15
+      x: points.topRightBack.x + sa + 15
     })
   }
 
