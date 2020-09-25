@@ -34,9 +34,11 @@ export default function(part) {
     console.log( 'strapLength '+strapLength);
 
     points.topLeft = new Point(0, 0)
-    points.topRight = new Point(strapWidth, 0)
+    points.topMiddle = new Point(strapWidth, 0)
+    points.topRight = new Point(strapWidth *2, 0)
     points.bottomLeft = new Point(0, strapLength )
-    points.bottomRight = new Point(strapWidth, strapLength)
+    points.bottomMiddle = new Point(strapWidth, strapLength)
+    points.bottomRight = new Point(strapWidth *2, strapLength)
   
     paths.seam = new Path()
       .move(points.topLeft)
@@ -47,9 +49,24 @@ export default function(part) {
       .close()
       .attr('class', 'fabric')
   
+    paths.fold = new Path()
+      .move(points.topMiddle)
+      .line(points.bottomMiddle)
+      .attr('class', 'various dashed')
+      .attr('data-text', 'fold')
+      .attr('data-text-class', 'text-xs center')
+
     // Complete?
     if (complete) {
-      if (sa) {
+      points.logo = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
+      snippets.logo = new Snippet('logo', points.logo).attr("data-scale", 0.5);
+      points.title = points.logo.shift(-90, 50)
+      macro('title',{
+        nr: 2,
+        at: points.title,
+        title: 'Strap'
+      })
+    if (sa) {
         paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
       }
     }

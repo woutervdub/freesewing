@@ -36,7 +36,7 @@ export default {
   dependencies: {},
   inject: {},
   hide: [],
-  parts: ["front","strap"],
+  parts: ["front","strap","pocket"],
   options: {
     backOpening: { pct: 10, min: 0, max: 25 },
     lengthBonus: { pct: 0, min: -20, max: 25 },

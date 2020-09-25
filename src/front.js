@@ -41,12 +41,20 @@ export default function(part) {
   console.log('hpsToWaistFront ' +measurements.hpsToWaistFront )
   console.log('hpsToWaistBack ' +measurements.hpsToWaistBack )
 
-  paths.seam = new Path()
-    .move(points.bottomLeft)
-    .line(points.bottomRight)
+  paths.rightHem = new Path()
+    .move(points.bottomRight)
     .line(points.topRightBack)
     .curve(points.topRightBackCPfront, points.topRightCPdown,points.topRightHem)
     .line(points.topRight)
+    .attr('class', 'various dashed')
+    .attr('data-text', 'narrow hem')
+    .attr('data-text-class', 'text-xs center');
+
+  paths.right = paths.rightHem.offset( sa );
+
+  paths.seam = new Path()
+    .move(points.bottomLeft)
+    .join(paths.right)
     .line(points.topLeft)
     .close()
     .attr('class', 'fabric');
@@ -55,12 +63,16 @@ export default function(part) {
     
     paths.topHem = new Path()
       .move(points.topLeftHem)
-      .line(points.topRightHem)
-      .attr('class', 'various dashed');
+      .line(points.topRightHem.shift( 0, sa ))
+      .attr('class', 'various dashed')
+      .attr('data-text', 'hem')
+      .attr('data-text-class', 'text-xs center');
     paths.bottomHem = new Path()
       .move(points.bottomLeftHem)
-      .line(points.bottomRightHem)
-      .attr('class', 'various dashed');
+      .line(points.bottomRightHem.shift( 0, sa ))
+      .attr('class', 'various dashed')
+      .attr('data-text', 'hem')
+      .attr('data-text-class', 'text-xs center');
 
       // Complete?
   if (complete) {
