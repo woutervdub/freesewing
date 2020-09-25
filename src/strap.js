@@ -15,11 +15,11 @@ export default function(part) {
     } = part.shorthand()
   
     let chestWidth = measurements.chestCircumference /4;
-  
+    let bibWidth = chestWidth *options.bibWidth;
     let apronWidth = Math.max( measurements.hipsCircumference, measurements.waistCircumference) *(1 - options.backOpening);
     let backOpening = apronWidth - Math.max( measurements.hipsCircumference, measurements.waistCircumference);
   
-    let hSpan = (backOpening/2) + (chestWidth/2);
+    let hSpan = (backOpening/2) + (bibWidth/2);
     let vSpan = measurements.hpsToWaistBack + 
         measurements.hpsToWaistFront -
         (measurements.hpsToWaistFront *options.bibLength);
@@ -43,23 +43,15 @@ export default function(part) {
       .line(points.bottomLeft)
       .line(points.bottomRight)
       .line(points.topRight)
+      .line(points.topLeft)
       .close()
       .attr('class', 'fabric')
   
     // Complete?
     if (complete) {
-      /*
-      points.logo = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
-      snippets.logo = new Snippet('logo', points.logo)
-      points.text = points.logo
-        .shift(-90, w / 8)
-        .attr('data-text', 'hello')
-        .attr('data-text-class', 'center')
-  
       if (sa) {
         paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
       }
-      */
     }
   
     // Paperless?

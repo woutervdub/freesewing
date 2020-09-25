@@ -22,8 +22,8 @@ export default {
     "sewing pattern"
   ],
   optionGroups: {
-    fit: ["backOpening"],
-    style: ["lengthBonus", "bibLength"]
+    fit: ["backOpening","chestDepth"],
+    style: ["lengthBonus", "bibLength", "bibWidth","strapWidth"]
   },
   measurements: [
     "chestCircumference",
@@ -42,6 +42,7 @@ export default {
     lengthBonus: { pct: 0, min: -20, max: 25 },
     chestDepth: { pct: 22, min: 15, max: 90 },
     bibLength: { pct: 75, min: 0, max: 90 },
+    bibWidth: { pct: 100, min: 50, max: 125 },
     strapWidth: { pct: 750, min: 100, max: 1500 },
     
   }
