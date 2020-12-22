@@ -1,16 +1,21 @@
 import freesewing from '@freesewing/core'
 import plugins from '@freesewing/plugin-bundle'
+// import theme from '@freesewing/plugin-theme'
 import config from '../config'
-import draftFront from './front'
-import draftStrap from './strap'
-import draftPocket from './pocket'
+import draftSidepanel from './sidepanel'
+import draftFrontpanel from './frontpanel'
+import draftBottompanel from './bottompanel'
+import draftZipperpanel from './zipperpanel'
+import draftSidepanelreinforcement from './sidepanelreinforcement'
 
 // Create new design
-const Pattern = new freesewing.Design(config, plugins)
+const Pattern = new freesewing.Design(config, plugins )
 
 // Attach the draft methods to the prototype
-Pattern.prototype.draftFront = draftFront
-Pattern.prototype.draftStrap = draftStrap
-Pattern.prototype.draftPocket = draftPocket
+Pattern.prototype.draftSidepanel = draftSidepanel
+Pattern.prototype.draftBottompanel = draftBottompanel
+Pattern.prototype.draftFrontpanel = draftFrontpanel
+Pattern.prototype.draftZipperpanel = draftZipperpanel
+Pattern.prototype.draftSidepanelreinforcement = draftSidepanelreinforcement
 
 export default Pattern

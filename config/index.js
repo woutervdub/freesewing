@@ -3,11 +3,11 @@ import { version } from "../package.json";
 // ?? 🤔 ?? --> https://en.freesewing.dev/packages/core/config
 
 export default {
-  name: "albert",
+  name: "box",
   version,
-  design: "WouterVdub",
-  code: "WouterVdub",
-  department: "unisex",
+  design: "Stoffsuchti/WouterVdub",
+  code: "Stoffsuchti/WouterVdub",
+  department: "accessories",
   type: "pattern",
   difficulty: 3,
   tags: [
@@ -22,28 +22,17 @@ export default {
     "sewing pattern"
   ],
   optionGroups: {
-    fit: ["backOpening","chestDepth"],
-    style: ["lengthBonus", "bibLength", "bibWidth","strapWidth"]
+    options: ["size", "zipperSize"]
   },
-  measurements: [
-    "chestCircumference",
-    "waistCircumference",
-    "hipsCircumference",
-    "hpsToWaistBack",
-    "hpsToWaistFront",
-    "waistToKnee"
-  ],
+  measurements: [],
   dependencies: {},
   inject: {},
   hide: [],
-  parts: ["front","strap","pocket"],
+  parts: ["sidepanel","frontpanel","bottompanel","zipperpanel","sidepanelreinforcement"],
   options: {
-    backOpening: { pct: 10, min: 0, max: 25 },
-    lengthBonus: { pct: 0, min: -20, max: 25 },
-    chestDepth: { pct: 22, min: 15, max: 90 },
-    bibLength: { pct: 75, min: 0, max: 90 },
-    bibWidth: { pct: 100, min: 50, max: 125 },
-    strapWidth: { pct: 750, min: 100, max: 1500 },
-    
+    width: 230,
+    height: 330,
+    size: { pct: 50, min: 10, max: 100 },
+    zipperSize: { dflt: '#5', list: ['#3','#4','#4.5','#5','#6','#8','#10','Invisible']} 
   }
 };
