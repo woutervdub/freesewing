@@ -37,10 +37,10 @@ export default function (part) {
   const sidePanelReinforcementHeight = h / phi / phi / phi / phi;
   const zipperWidth = zWidth.get( options.zipperSize );
   const zipperPanelWidth = sidePanelReinforcementHeight / phi;
-  console.log( '---' );
-  console.log( options.zipperSize );
-  console.log( zipperWidth );
-  console.log( '---' );
+  // console.log( '---' );
+  // console.log( options.zipperSize );
+  // console.log( zipperWidth );
+  // console.log( '---' );
   
 
   store.set( 'width', w );
@@ -134,9 +134,11 @@ export default function (part) {
     
   // Complete?
   if (complete) {
-    points.logo = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.30)
-    snippets.logo = new Snippet('logo', points.logo)
-
+    if( options.size > .4 ) {
+      points.logo = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.30)
+      snippets.logo = new Snippet('logo', points.logo)
+    }
+    
     points.title = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.60)
     .attr("data-text-class", "center")
 

@@ -22,11 +22,22 @@ export default function (part) {
   points.bottomLeft = new Point(0, h);
   points.bottomRight = new Point(w, h);
 
-  paths.seam = new Path()
+  paths.bottom = new Path()
     .move(points.topLeft)
     .line(points.bottomLeft)
-    .line(points.bottomRight)
+    .attr('data-text', 'Bottom')
+    .attr("data-text-class", "center text-xs")
+
+  paths.top = new Path()
+    .move(points.bottomRight)
     .line(points.topRight)
+    .attr('data-text', 'Top')
+    .attr("data-text-class", "center text-xs")
+
+  //paths.seam = new Path()
+  paths.seam = paths.bottom
+    .line(points.bottomRight)
+    .join(paths.top)
     .line(points.topLeft)
     .close()
     .attr("class", "fabric");

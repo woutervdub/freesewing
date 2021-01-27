@@ -3,7 +3,7 @@ import { version } from "../package.json";
 // ?? 🤔 ?? --> https://en.freesewing.dev/packages/core/config
 
 export default {
-  name: "box",
+  name: "hortensia",
   version,
   design: "Stoffsuchti/WouterVdub",
   code: "Stoffsuchti/WouterVdub",
