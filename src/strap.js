@@ -12,14 +12,22 @@ export default function(part) {
     sa,
     paperless,
     macro
-  } = part.shorthand()
+  } = part.shorthand();
 
-  let w = store.get( 'bottomPanelLength' );
-  let h = store.get( 'depth' );
+  let w = options.handleWidth;
+  let h = store.get( 'depth' ) * options.strapLength;
+  if( sa > w *.80 ) {
+    sa = w *.80;
+  }
+  console.log( w );
+  console.log( h );
+  console.log( sa );
 
-  points.topLeft = new Point(0, 0)
+  points.topLeft = new Point(-w, 0)
+  points.topMiddle = new Point(0, 0)
   points.topRight = new Point(w, 0)
-  points.bottomLeft = new Point(0, h)
+  points.bottomLeft = new Point(-w, h)
+  points.bottomMiddle = new Point(0, h)
   points.bottomRight = new Point(w, h)
 
   paths.seam = new Path()
@@ -31,18 +39,22 @@ export default function(part) {
     .close()
     .attr('class', 'fabric')
 
+  paths.fold = new Path()
+    .move(points.topMiddle)
+    .line(points.bottomMiddle)
+    .attr('data-text', 'FoldLine')
+    .attr("data-text-class", "center text-xs")
+    .attr('class', 'lining dashed')
+
   // Complete?
   if (complete) {
-    points.logo = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
-    snippets.logo = new Snippet('logo', points.logo)
-    points.title = points.logo
-      .shift(-90, 50)
-      .attr("data-text-class", "center")
-
+    points.title = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.25)
     macro("title", {
       at: points.title,
-      nr: 3,
-      title: "BottomPanel"
+      nr: 5,
+      title: "BottomPanel",
+      rotation: 90,
+      scale: 0.25
     });
     points.__titleNr.attr("data-text-class", "center");
     points.__titleName.attr("data-text-class", "center");

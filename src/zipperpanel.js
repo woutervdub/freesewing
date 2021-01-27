@@ -37,9 +37,11 @@ export default function(part) {
 
   // Complete?
   if (complete) {
-    points.text = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
-      .attr('data-text', 'Zipper Panel')
-      .attr('data-text-class', 'center')
+    paths.text = new Path()
+      .move(points.topLeft)
+      .line(points.bottomLeft)
+      .attr('data-text', 'ZipperPanel')
+      .attr('data-text-class', 'center text-xs')
 
     if (sa) {
       paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')

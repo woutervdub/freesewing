@@ -22,7 +22,7 @@ export default function (part) {
 
   const zWidth = new Map([['Invisible',0],['#3',4.8],['#4',5.4],['#4.5',5.9],['#5',6.2],['#6',7],['#8',8],['#10',10.6]]);
 
-  const w = options.width *2 *options.size;
+  const w = options.width *options.size;
   const sizeRatio = (w / 230);
   
   const h = options.height * sizeRatio;
@@ -53,6 +53,9 @@ export default function (part) {
   store.set( 'sidePanelReinforcementHeight', sidePanelReinforcementHeight );
   store.set( 'zipperWidth', zipperWidth );
   store.set( 'zipperPanelWidth', zipperPanelWidth );
+  
+  console.log( 'zipperWidth: ' +zipperWidth );
+  console.log( 'zipperPanelWidth: ' +zipperPanelWidth );
   
   
   points.topCenter = new Point(0, 0);
@@ -106,18 +109,20 @@ export default function (part) {
   points.topZipperPanelLeft = pTop.shiftAlong( (topCircleLength/2) +(zipperPanelWidth/2))
   
   store.set( 'bottomPanelLength', pBottomPanel.length() );
+  console.log( 'bottomPanelLength: ' +pBottomPanel.length() );
 
   let pSidesAndTop = new Path()
-    .move(points.bottomRightU)
+    .move(points.bottomSeamRight)
     .line(points.shoulderRight)
     .curve(points.shoulderRightCP, points.topCircleRightCPd, points.topCircleRight)
     .join( pTop )
     .curve(points.topCircleLeftCPd, points.shoulderLeftCP, points.shoulderLeft)
-    .line(points.bottomLeftU)
+    .line(points.bottomSeamLeft)
 
   let frontPanelLength = (pSidesAndTop.length() -zipperPanelWidth) /2;
 
   store.set( 'frontPanelLength', frontPanelLength );
+  console.log( 'frontPanelLength: ' +frontPanelLength );
 
   paths.seam = new Path()
     .move(points.bottomRightU)
@@ -129,13 +134,23 @@ export default function (part) {
     
   // Complete?
   if (complete) {
-    points.logo = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
+    points.logo = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.30)
     snippets.logo = new Snippet('logo', points.logo)
-    points.text = points.logo
-    .shift(-90, w / 8)
-    .attr('data-text', 'Side Panel')
-    .attr('data-text-class', 'center')
+
+    points.title = points.topMiddle.shiftFractionTowards(points.bottomMiddle, 0.60)
+    .attr("data-text-class", "center")
+
+    macro("title", {
+      at: points.title,
+      nr: 1,
+      title: "SidePanel"
+    });
     
+    points.__titleNr.attr("data-text-class", "center");
+    points.__titleName.attr("data-text-class", "center");
+    points.__titlePattern.attr("data-text-class", "center");
+    // points.__titleFor.attr("data-text-class", "center");
+
     snippets.topNotch = new Snippet('notch', points.topMiddle);
     snippets.zipperLeft = new Snippet('notch', points.topZipperLeft);
     snippets.zipperRight = new Snippet('notch', points.topZipperRight);
@@ -187,6 +202,14 @@ export default function (part) {
       to: points.topMiddle,
       noStartMarker: true
     })
+    // macro('pd', {
+    //   path: pSidesAndTop,
+    //   d: -20
+    // })
+    // macro('pd', {
+    //   path: pTop,
+    //   d: -30
+    // })
   }
 
   return part

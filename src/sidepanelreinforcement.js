@@ -41,9 +41,17 @@ export default function (part) {
 
   // Complete?
   if (complete) {
-    points.text = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
-      .attr('data-text', 'Side Panel Reinforcement')
+    points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
       .attr('data-text-class', 'center')
+    macro("title", {
+      at: points.title,
+      nr: 4,
+      title: "SidePanelReinforcement",
+      scale: 0.25
+    });
+    points.__titleNr.attr("data-text-class", "center");
+    points.__titleName.attr("data-text-class", "center");
+    points.__titlePattern.attr("data-text-class", "center");
 
     if (sa) {
       paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')

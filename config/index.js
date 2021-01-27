@@ -22,17 +22,23 @@ export default {
     "sewing pattern"
   ],
   optionGroups: {
-    options: ["size", "zipperSize"]
+    options: ["size", "zipperSize","strapLength","handleWidth"]
   },
   measurements: [],
   dependencies: {},
   inject: {},
   hide: [],
-  parts: ["sidepanel","frontpanel","bottompanel","zipperpanel","sidepanelreinforcement"],
+  parts: ["sidepanel","frontpanel","bottompanel","zipperpanel","sidepanelreinforcement","strap"],
   options: {
     width: 230,
     height: 330,
-    size: { pct: 50, min: 10, max: 100 },
+    minHandleSpaceWidth: 80,
+    maxHandleSpaceWidth: 250,
+    pctHandleSpace: 50,
+    pctHandleVert: 42,
+    strapLength: { pct: 160, min: 75, max: 250 },
+    handleWidth: { mm: 20, min: 7, max: 30 },
+    size: { pct: 50, min: 20, max: 200 },
     zipperSize: { dflt: '#5', list: ['#3','#4','#4.5','#5','#6','#8','#10','Invisible']} 
   }
 };
