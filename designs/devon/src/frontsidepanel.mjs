@@ -1,5 +1,5 @@
-// import { front as brianFront } from '@freesewing/brian'
 import { front } from './front.mjs'
+import { dim } from './shared.mjs'
 
 export const frontSidePanel = {
   name: 'devon.frontSidePanel',
@@ -13,7 +13,7 @@ export const frontSidePanel = {
     // Constants
     // Parameters
   },
-  draft: ({ points, Path, paths, macro, store, options, part }) => {
+  draft: ({ points, Path, paths, macro, store, options, sa, part }) => {
     macro('rmcutonfold')
     for (const i in paths) {
       if (['frontSidePanelArmhole'].indexOf(i) === -1) delete paths[i]
@@ -96,13 +96,11 @@ export const frontSidePanel = {
         .move(points.frontHemSidePanelSaved)
         .curve(points.frontHemSidePanelCp1, points.frontYokeSidePanelCp2, points.frontYokeSidePanel)
         .shiftAlong(options.pocketHeight * sidePanelLength)
-        .addCircle(9)
-      points.cfPocketBottom = points.cfHem
-        .rotate(angleFBA, points.frontHemSidePanelSaved)
-        .addCircle(9)
-      points.cfPocketTop = points.cfPocketBottom
-        .shift(90 + angleFBA, points.cfHem.dist(points.cfYoke) * options.pocketHeight)
-        .addCircle(9)
+      points.cfPocketBottom = points.cfHem.rotate(angleFBA, points.frontHemSidePanelSaved)
+      points.cfPocketTop = points.cfPocketBottom.shift(
+        90 + angleFBA,
+        points.cfHem.dist(points.cfYoke) * options.pocketHeight
+      )
 
       paths.sidePanelHem = new Path()
         .move(points.frontYokeSidePanel)
@@ -121,6 +119,8 @@ export const frontSidePanel = {
         .join(paths.sidePanelHem)
         .close()
         .attr('class', 'fabric')
+
+      points.sidePanelLeft = paths.sidePanelHem.edge('left')
     } else {
       points.panelPocketTop = points.frontHemSidePanelSaved.shiftFractionTowards(
         points.frontYokeSidePanel,
@@ -146,14 +146,45 @@ export const frontSidePanel = {
         .close()
         .attr('class', 'fabric')
     }
-    paths.pocket = new Path()
-      .move(points.panelPocketTop)
-      .line(points.cfPocketTop)
-      .line(points.cfPocketBottom)
-      .line(points.frontHemSidePanelSaved)
+    // paths.pocket = new Path()
+    //   .move(points.panelPocketTop)
+    //   .line(points.cfPocketTop)
+    //   .line(points.cfPocketBottom)
+    //   .line(points.frontHemSidePanelSaved)
+
+    // Seam allowance
+    if (sa) {
+      paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    }
+
+    /*
+     * Annotatinos
+     */
+    store.cutlist.addCut({ cut: 2, from: 'fabric', onFold: false })
 
     points.title = points.frontYokeSidePanel.shiftFractionTowards(points.hem, 0.3)
     macro('title', { nr: 6, title: 'frontSide', at: points.title })
+
+    dim(part, [
+      ['h', 'frontYokeSidePanel', 'frontArmholeYoke', 'frontYokeSidePanel', -15],
+      ['h', 'frontArmholeYoke', 'armhole', 'frontYokeSidePanel', -15],
+      ['h', 'frontHemSidePanelSaved', 'hem', 'frontHemSidePanelSaved', 15],
+      ['h', 'frontHemSidePanelSaved', 'frontYokeSidePanel', 'frontYokeSidePanel', -15],
+      ['h', 'hem', 'armhole', 'frontHemSidePanelSaved', 15],
+      ['v', 'frontHemSidePanelSaved', 'frontYokeSidePanel', 'frontHemSidePanelSaved', -15],
+      ['v', 'hem', 'armhole', 'armhole', 15],
+      ['v', 'frontHemSidePanelSaved', 'hem', 'armhole', 15],
+      ['v', 'armhole', 'frontArmholeYoke', 'armhole', 15],
+      ['v', 'frontArmholeYoke', 'frontYokeSidePanel', 'armhole', 15],
+    ])
+
+    if (useFBA) {
+      dim(part, [
+        ['h', 'sidePanelLeft', 'frontYokeSidePanel', 'frontYokeSidePanel', -15],
+        ['v', 'frontHemSidePanelSaved', 'frontYokeSidePanel', 'sidePanelLeft', -15],
+        ['v', 'frontHemSidePanelSaved', 'sidePanelLeft', 'sidePanelLeft', -30],
+      ])
+    }
 
     store.set(
       'hemLength',

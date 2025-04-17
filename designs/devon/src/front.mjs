@@ -383,6 +383,7 @@ export const front = {
     console.log({ paths: JSON.parse(JSON.stringify(paths)) })
 
     console.log({ frontLength: points.cfNeck.dist(points.cfHem) })
+    console.log({ shoulderLength: points.s3ArmholeSplit.dist(points.s3CollarSplit) })
 
     console.log({
       side: 'front',

@@ -1,5 +1,5 @@
-// import { front as brianFront } from '@freesewing/brian'
 import { front } from './front.mjs'
+import { dim } from './shared.mjs'
 
 export const frontFacing = {
   name: 'devon.frontFacing',
@@ -13,7 +13,7 @@ export const frontFacing = {
     // Constants
     // Parameters
   },
-  draft: ({ points, Path, paths, macro, store, part }) => {
+  draft: ({ points, Path, paths, macro, sa, store, part }) => {
     macro('rmcutonfold')
     for (const i in paths) {
       if (['frontCollar'].indexOf(i) === -1) delete paths[i]
@@ -23,7 +23,7 @@ export const frontFacing = {
       clone: true,
       mirror: [points.cfNeck, points.cfHem],
       points: ['frontNeck', 'frontYoke', 'frontHem'],
-      nameFormat: (n, t) => {
+      nameFormat: (n) => {
         return n.replace('front', 'facing')
       },
     })
@@ -51,9 +51,28 @@ export const frontFacing = {
       .close()
       .attr('class', 'fabric')
 
+    // Seam allowance
+    if (sa) {
+      paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    }
+
+    /*
+     * Annotatinos
+     */
+    store.cutlist.addCut({ cut: 2, from: 'fabric', onFold: false })
+
     points.title = points.frontYokePanel.shiftFractionTowards(points.cfChest, 0.5)
     macro('title', { nr: 12, title: 'frontFacing', at: points.title })
-    console.log({ facingpoints: JSON.parse(JSON.stringify(points)) })
+
+    dim(part, [
+      ['h', 'frontNeck', 'facingCollar', 'facingCollar', -15],
+      ['h', 'frontNeck', 'cfNeck', 'cfNeck', -15],
+      ['h', 'frontHem', 'facingHem', 'facingHem', 15],
+      ['v', 'frontHem', 'frontNeck', 'frontNeck', -15],
+      ['v', 'facingNeck', 'facingCollar', 'frontNeck', -15],
+      ['v', 'facingHem', 'facingCollar', 'facingCollar', 15],
+      ['v', 'facingHem', 'facingYoke', 'facingYoke', 15],
+    ])
 
     return part
   },

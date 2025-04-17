@@ -1,4 +1,5 @@
 import { sleeve } from './sleeve.mjs'
+import { dim } from './shared.mjs'
 
 export const cuff = {
   name: 'devon.cuff',
@@ -12,7 +13,7 @@ export const cuff = {
     // Constants
     // Parameters
   },
-  draft: ({ Point, points, Path, paths, macro, options, store, part }) => {
+  draft: ({ Point, points, Path, paths, macro, sa, store, part }) => {
     for (const i in paths) {
       delete paths[i]
     }
@@ -30,17 +31,49 @@ export const cuff = {
     points.bottomLeft = new Point(0, cuffWidth)
     points.bottomRight = new Point(cuffLength * 0.5, cuffWidth)
 
-    paths.seam = new Path()
-      .move(points.topLeft)
+    paths.seamBase = new Path()
+      .move(points.topRight)
+      .line(points.topLeft)
       .line(points.bottomLeft)
       .line(points.bottomRight)
+      .hide()
+
+    paths.seam = new Path()
+      .move(points.topRight)
+      .join(paths.seamBase)
       .line(points.topRight)
-      .line(points.topLeft)
       .close()
       .attr('class', 'fabric')
 
+    // Seam allowance
+    if (sa) {
+      paths.sa = new Path()
+        .move(points.topRight)
+        .join(paths.seamBase.offset(sa))
+        .line(points.bottomRight)
+        .attr('class', 'fabric sa')
+    }
+
+    /*
+     * Annotatinos
+     */
+
+    // Cut on fold
+    macro('cutonfold', {
+      from: points.bottomRight,
+      to: points.topRight,
+      grainline: false,
+    })
+
+    store.cutlist.addCut({ cut: 2, from: 'fabric', onFold: true })
+
     points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
     macro('title', { nr: 14, title: 'cuff', at: points.title })
+
+    dim(part, [
+      ['h', 'topLeft', 'topRight', 'topLeft', -15],
+      ['v', 'bottomLeft', 'topLeft', 'topLeft', -15],
+    ])
 
     return part
   },

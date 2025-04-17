@@ -13,28 +13,19 @@ export const sleeve = {
   },
   measurements: ['shoulderToElbow'],
   options: {
+    sleeveSlit: 9 / 63,
+
     sleeveAngle: { deg: 7, min: 0, max: 15, menu: 'fit' },
     cuffWidth: { pct: 7.5, min: 0, max: 10, menu: 'fit' },
   },
-  draft: ({
-    measurements,
-    options,
-    store,
-    points,
-    snippets,
-    Point,
-    Snippet,
-    Path,
-    paths,
-    utils,
-    macro,
-    part,
-  }) => {
+  draft: ({ measurements, options, store, points, Path, paths, utils, sa, part }) => {
     // let maxBack = Math.max(measurements.waistBack, measurements.seatBack) /2
     console.log({ spoints: JSON.parse(JSON.stringify(points)) })
 
     const cuffWidth = options.cuffWidth * measurements.shoulderToWrist
+    const sleeveSlit = options.sleeveSlit * measurements.shoulderToWrist
     store.set('cuffWidth', cuffWidth)
+    store.set('sleeveSlit', sleeveSlit)
 
     const tsAngle = points.tsWristLeft.angle(points.tsWristRight) + 90
     const usAngle = points.usWristLeft.angle(points.usWristRight) + 90
@@ -67,10 +58,30 @@ export const sleeve = {
       points.usHelperRight
     )
 
+    store.set(
+      'cuffLength',
+      points.tsCuffLeft.dist(points.tsCuffRight) + points.usCuffLeft.dist(points.usCuffRight)
+    )
+
+    points.usSlit = points.usCuffRight.shiftTowards(points.elbowRight, sleeveSlit)
+    points.tsSlit = points.tsCuffRight.shiftTowards(points.elbowRight, sleeveSlit)
+
+    if (sa) {
+      points.usSlitRight = points.usSlit.shift(points.usSlit.angle(points.elbowRight) - 90, sa)
+      points.tsSlitRight = points.tsSlit.shift(points.tsSlit.angle(points.elbowRight) - 90, sa)
+      points.usCuffRight = points.usCuffRight.shift(points.usSlit.angle(points.elbowRight) - 90, sa)
+      points.tsCuffRight = points.tsCuffRight.shift(points.tsSlit.angle(points.elbowRight) - 90, sa)
+    } else {
+      points.usSlitRight = points.usSlit.copy()
+      points.tsSlitRight = points.tsSlit.copy()
+    }
+
     console.log({ spoints: JSON.parse(JSON.stringify(points)) })
 
     paths.topSleeve = new Path()
       .move(points.tsCuffRight)
+      .line(points.tsSlitRight)
+      .line(points.tsSlit)
       .line(points.elbowRight)
       .curve(points.elbowRightCpTop, points.tsRightEdgeCpBottom, points.tsRightEdge)
       .curve_(points.tsRightEdgeCpTop, points.backPitchPoint)
@@ -85,6 +96,8 @@ export const sleeve = {
 
     paths.underSleeve = new Path()
       .move(points.usCuffRight)
+      .line(points.usSlitRight)
+      .line(points.usSlit)
       .line(points.elbowRight)
       .curve(points.elbowRightCpTop, points.usRightEdgeCpBottom, points.usRightEdge)
       .curve_(points.usRightEdgeCpTop, points.usTip)
@@ -95,11 +108,6 @@ export const sleeve = {
       .line(points.usCuffRight)
       .close()
       .attr('class', 'stroke-xl interfacing')
-
-    store.set(
-      'cuffLength',
-      points.tsCuffLeft.dist(points.tsCuffRight) + points.usCuffLeft.dist(points.usCuffRight)
-    )
 
     return part.hide()
   },

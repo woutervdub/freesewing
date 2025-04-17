@@ -1,4 +1,5 @@
 import { pocket } from './pocket.mjs'
+import { dim } from './shared.mjs'
 
 export const pocketflap = {
   name: 'devon.pocketflap',
@@ -14,7 +15,7 @@ export const pocketflap = {
     pocketflapSideHeightRatio: 3.5 / 12,
     // Parameters
   },
-  draft: ({ points, Path, paths, macro, options, store, part }) => {
+  draft: ({ points, Path, paths, macro, options, store, sa, part }) => {
     const pocketWidth = store.get('pocketWidth')
 
     // points.topLeft = new Point(0, 0)
@@ -35,8 +36,26 @@ export const pocketflap = {
       .close()
       .attr('class', 'fabric')
 
+    // Seam allowance
+    if (sa) {
+      paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    }
+
+    /*
+     * Annotatinos
+     */
     points.title = points.topLeft.shiftFractionTowards(points.bottomRight, 0.5)
     macro('title', { nr: 11, title: 'pocketflap', at: points.title })
+
+    macro('rmHd', 'htopLeftbottomLeft')
+    macro('rmHd', 'hbottomRighttopRight')
+    macro('rmHd', 'hbottomLeftbottomRight')
+
+    dim(part, [
+      ['h', 'topLeft', 'topRight', 'topLeft', -15],
+      ['v', 'bottomLeft', 'topLeft', 'topLeft', -15],
+      ['v', 'bottomMiddle', 'topRight', 'topRight', 15],
+    ])
 
     return part
   },

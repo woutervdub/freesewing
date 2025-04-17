@@ -1,5 +1,6 @@
 // import { front as brianFront } from '@freesewing/brian'
 import { front } from './front.mjs'
+import { dim } from './shared.mjs'
 
 export const frontInside = {
   name: 'devon.frontInside',
@@ -13,7 +14,7 @@ export const frontInside = {
     // Constants
     // Parameters
   },
-  draft: ({ points, Path, paths, macro, store, part }) => {
+  draft: ({ points, Path, paths, macro, store, sa, part }) => {
     macro('rmcutonfold')
     for (const i in paths) {
       delete paths[i]
@@ -34,8 +35,27 @@ export const frontInside = {
       .close()
       .attr('class', 'fabric')
 
+    // Seam allowance
+    if (sa) {
+      paths.sa = paths.seam.offset(sa).attr('class', 'fabric sa')
+    }
+
+    /*
+     * Annotatinos
+     */
+    store.cutlist.addCut({ cut: 2, from: 'fabric', onFold: false })
+
     points.title = points.frontYokePanel.shiftFractionTowards(points.cfChest, 0.5)
     macro('title', { nr: 4, title: 'frontInside', at: points.title })
+
+    dim(part, [
+      ['h', 'frontYoke', 'frontYokePanel', 'frontYoke', -15],
+      ['h', 'frontHem', 'frontHemPanel', 'frontHem', 15],
+      ['h', 'frontYokePanel', 'frontHemPanel', 'frontYoke', -15],
+      ['v', 'frontHem', 'frontYoke', 'frontYoke', -15],
+      ['v', 'frontHemPanel', 'frontYokePanel', 'frontHemPanel', 15],
+      ['v', 'frontHem', 'frontHemPanel', 'frontHemPanel', 15],
+    ])
 
     return part
   },
